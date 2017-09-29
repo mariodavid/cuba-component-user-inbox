@@ -14,8 +14,10 @@ create table DDCUI_MESSAGE (
     SUBJECT varchar(255),
     ENTITY_REFERENCE_ID varchar(255),
     ENTITY_REFERENCE_CLASS varchar(255),
+    ENTITY_CAPTION varchar(255),
     TEXT longvarchar,
     READ_ boolean not null,
+    RECEIVED_AT timestamp not null,
     --
     primary key (ID)
 )^

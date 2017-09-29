@@ -11,4 +11,6 @@
             template="de/diedavids/cuba/userinbox/web/message/user-inbox.xml"/>
     <screen id="send-message"
             template="de/diedavids/cuba/userinbox/web/message/send-message.xml"/>
+    <screen id="ddcui$Message.edit"
+            template="de/diedavids/cuba/userinbox/web/message/message-edit.xml"/>
 </screen-config>

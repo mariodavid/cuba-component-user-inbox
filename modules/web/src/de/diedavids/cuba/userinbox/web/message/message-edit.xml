@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
-        caption="msg://newMessage"
-        class="de.diedavids.cuba.userinbox.web.message.SendMessage"
+        caption="msg://editorCaption"
+        class="de.diedavids.cuba.userinbox.web.message.MessageEdit"
         datasource="messageDs"
         focusComponent="fieldGroup"
         messagesPack="de.diedavids.cuba.userinbox.web.message">
@@ -9,13 +9,6 @@
         <datasource id="messageDs"
                     class="de.diedavids.cuba.userinbox.entity.Message"
                     view="message-with-users-view"/>
-        <collectionDatasource id="userTypesDs"
-                              class="com.haulmont.cuba.security.entity.User"
-                              view="_local">
-            <query>
-                <![CDATA[select e from sec$User e]]>
-            </query>
-        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -24,13 +17,14 @@
         <fieldGroup id="fieldGroup"
                     datasource="messageDs">
             <column width="500px">
-                <field property="receiver" optionsDatasource="userTypesDs"/>
-                <field property="subject"/>
+                <field property="receiver" editable="false"/>
+                <field property="subject" editable="false"/>
             </column>
         </fieldGroup>
         <richTextArea id="messageTextTextArea"
                       datasource="messageDs"
                       property="text"
+                      editable="false"
                       width="100%"/>
         <frame id="windowActions"
                screen="editWindowActions"/>

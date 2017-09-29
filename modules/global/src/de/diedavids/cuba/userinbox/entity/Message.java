@@ -1,16 +1,22 @@
 package de.diedavids.cuba.userinbox.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
+import com.haulmont.cuba.core.entity.annotation.Lookup;
+import com.haulmont.cuba.core.entity.annotation.LookupType;
 import com.haulmont.cuba.security.entity.User;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-import com.haulmont.cuba.core.entity.StandardEntity;
-import javax.persistence.Column;
 import javax.persistence.Lob;
-import com.haulmont.cuba.core.entity.annotation.Listeners;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Listeners("ddcui_MessageEntityListener")
 @Table(name = "DDCUI_MESSAGE")
@@ -22,6 +28,7 @@ public class Message extends StandardEntity {
     @JoinColumn(name = "SENDER_ID")
     protected User sender;
 
+    @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "clear"})
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "RECEIVER_ID")
@@ -36,6 +43,9 @@ public class Message extends StandardEntity {
     @Column(name = "ENTITY_REFERENCE_CLASS")
     protected String entityReferenceClass;
 
+    @Column(name = "ENTITY_CAPTION")
+    protected String entityCaption;
+
     @Lob
     @Column(name = "TEXT")
     protected String text;
@@ -43,6 +53,29 @@ public class Message extends StandardEntity {
     @NotNull
     @Column(name = "READ_", nullable = false)
     protected Boolean read = false;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    @Column(name = "RECEIVED_AT", nullable = false)
+    protected Date receivedAt;
+
+    public void setReceivedAt(Date receivedAt) {
+        this.receivedAt = receivedAt;
+    }
+
+    public Date getReceivedAt() {
+        return receivedAt;
+    }
+
+
+    public void setEntityCaption(String entityCaption) {
+        this.entityCaption = entityCaption;
+    }
+
+    public String getEntityCaption() {
+        return entityCaption;
+    }
+
 
     public void setRead(Boolean read) {
         this.read = read;

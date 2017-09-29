@@ -26,14 +26,17 @@
         <groupTable id="messagesTable"
                     width="100%">
             <actions>
-                <action id="create" caption="msg://newMessage" />
-                <action id="edit"/>
+                <action id="create"
+                        caption="msg://newMessage"/>
+                <action id="edit" caption="mainMsg://actions.View" icon="font-icon:SEARCH"/>
                 <action id="remove"/>
             </actions>
             <columns>
                 <column id="sender"/>
                 <column id="subject"/>
                 <column id="read"/>
+                <column id="entityCaption" link="true" linkInvoke="openEntity"/>
+                <column id="receivedAt"/>
             </columns>
             <rows datasource="messagesDs"/>
             <rowsCount/>
