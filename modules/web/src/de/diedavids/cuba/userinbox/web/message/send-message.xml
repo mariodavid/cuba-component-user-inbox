@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://newMessage"
+        class="de.diedavids.cuba.userinbox.web.message.SendMessage"
+        datasource="messageDs"
+        focusComponent="fieldGroup"
+        messagesPack="de.diedavids.cuba.userinbox.web.message">
+    <dsContext>
+        <datasource id="messageDs"
+                    class="de.diedavids.cuba.userinbox.entity.Message"
+                    view="message-with-users-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="messageTextTextArea"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="messageDs">
+            <column width="500px">
+                <field property="receiver"/>
+                <field property="subject"/>
+            </column>
+        </fieldGroup>
+        <richTextArea id="messageTextTextArea"
+                      datasource="messageDs"
+                      property="text"
+                      width="100%"/>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

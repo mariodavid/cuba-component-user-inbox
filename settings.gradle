@@ -1,0 +1,6 @@
+rootProject.name = 'cuba-component-user-inbox'
+include(':user-inbox-global', ':user-inbox-core', ':user-inbox-gui', ':user-inbox-web')
+project(':user-inbox-global').projectDir = new File(settingsDir, 'modules/global')
+project(':user-inbox-core').projectDir = new File(settingsDir, 'modules/core')
+project(':user-inbox-gui').projectDir = new File(settingsDir, 'modules/gui')
+project(':user-inbox-web').projectDir = new File(settingsDir, 'modules/web')

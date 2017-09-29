@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+    <view class="de.diedavids.cuba.userinbox.entity.Message"
+          extends="_local"
+          name="message-with-users-view">
+        <property name="sender"
+                  view="_minimal"/>
+        <property name="receiver"
+                  view="_minimal"/>
+    </view>
+</views>
