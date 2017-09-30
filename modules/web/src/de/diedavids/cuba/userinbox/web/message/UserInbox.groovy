@@ -7,6 +7,7 @@ import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.gui.WindowManager
 import com.haulmont.cuba.gui.components.AbstractLookup
 import com.haulmont.cuba.gui.components.Component
+import com.haulmont.cuba.gui.components.Frame
 import com.haulmont.cuba.gui.components.Table
 import com.haulmont.cuba.gui.components.actions.BaseAction
 import com.haulmont.cuba.gui.components.actions.CreateAction
@@ -21,6 +22,8 @@ class UserInbox extends AbstractLookup {
 
     @Named("messagesTable.create")
     CreateAction createAction
+
+
     @Named("messagesTable.edit")
     EditAction editAction
 
@@ -40,6 +43,18 @@ class UserInbox extends AbstractLookup {
     void init(Map<String, Object> params) {
         super.init(params)
         createAction.windowId = 'send-message'
+        createAction.afterCommitHandler = new CreateAction.AfterCommitHandler() {
+            @Override
+            void handle(Entity entity) {
+                messagesDs.refresh()
+                showMessageSendNotification()
+            }
+        }
+    }
+
+
+    private showMessageSendNotification() {
+        showNotification(messages.formatMessage(getClass(), 'messageSend'), Frame.NotificationType.TRAY)
     }
 
     void openEntity(Message item, String columnId) {

@@ -10,7 +10,7 @@
                          class="de.diedavids.cuba.userinbox.entity.Message"
                          view="message-with-users-view">
             <query>
-                <![CDATA[select e from ddcui$Message e where e.receiver.id = :session$userId]]>
+                <![CDATA[select e from ddcui$Message e where e.receiver.id = :session$userId order by e.receivedAt desc]]>
             </query>
         </groupDatasource>
     </dsContext>
@@ -24,6 +24,7 @@
             <properties include=".*"/>
         </filter>
         <groupTable id="messagesTable"
+                    multiselect="true"
                     width="100%">
             <actions>
                 <action id="create"
@@ -34,8 +35,8 @@
             <columns>
                 <column id="sender"/>
                 <column id="subject"/>
-                <column id="read"/>
                 <column id="entityCaption" link="true" linkInvoke="openEntity"/>
+                <column id="read"/>
                 <column id="receivedAt"/>
             </columns>
             <rows datasource="messagesDs"/>
