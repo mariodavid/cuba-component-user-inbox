@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="mainMsg://application.caption"
-        class="de.diedavids.cuba.userinbox.web.screens.SideExtMainwindow"
+        class="de.diedavids.cuba.userinbox.web.screens.SideMainwindowWithMessages"
         messagesPack="de.diedavids.cuba.userinbox.web.screens"
         xmlns:main="http://schemas.haulmont.com/cuba/mainwindow.xsd">
     <timers>

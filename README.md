@@ -51,7 +51,6 @@ to the system in order to notify the user about something changed in the system.
 ![Screenshot overview of incoming messages](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/img/messages-overview.png)
 
 
-
 ## Sending messages
 
 To send messages to a particular user, there are two options available:
@@ -106,3 +105,26 @@ public interface MessageService {
 `sendSystemMessage` will add a message in the given receivers inbox with a subject, a text and an optional entity reference.
 
 
+## Using predefined main window screens
+
+This application component comes with two options for the main screens, that can be used in the final application.
+ 
+* SideMainwindowWithMessages (side-mainwindow-with-messages.xml)
+* AppMainWindowWithMessages (mainwindow-with-messages.xml)
+
+One of these two classes can be used as the mainwinow through the following definition in your web-screens.xml:
+
+````    
+<!-- either the normal mainwindow with messages badge -->
+<screen id="mainWindow"
+        template="de/diedavids/cuba/userinbox/web/screens/mainwindow-with-messages.xml"/>
+
+<!-- or the side menu main window with messages badge -->
+<screen id="mainWindow"
+        template="de/diedavids/cuba/userinbox/web/screens/side-mainwindow-with-messages.xml"/>
+
+````
+
+You can also extend this screens, so that you can add your own (screen-) logic to the mainwindow.
+ 
+ 

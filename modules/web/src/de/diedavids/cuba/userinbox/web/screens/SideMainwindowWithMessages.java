@@ -11,7 +11,7 @@ import de.diedavids.cuba.userinbox.service.MessageService;
 import javax.inject.Inject;
 import java.util.Map;
 
-public class SideExtMainwindow extends AbstractMainWindow {
+public class SideMainwindowWithMessages extends AbstractMainWindow {
 
     @Inject
     private FtsField ftsField;
