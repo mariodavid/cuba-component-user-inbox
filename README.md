@@ -1,5 +1,5 @@
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Build Status](https://travis-ci.org/mariodavid/cuba-component-health-check.svg?branch=master)](https://travis-ci.org/mariodavid/cuba-component-health-check)
+[![Build Status](https://travis-ci.org/mariodavid/cuba-component-user-inbox.svg?branch=master)](https://travis-ci.org/mariodavid/cuba-component-user-inbox)
 
 # CUBA Platform Component - User Inbox
 
