@@ -65,7 +65,7 @@ In order to send a message to a particular user, there is a button "Send message
 
 This screen allows to manually send a message. A message contains a subject and a body, just like a regular Email.
 
-![Screenshot of sending a new message](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/img/send-messages.png)
+![Screenshot of sending a new message](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/img/send-message.png)
 
 
 This feature can sometimes be helpful but oftentimes sending a regular email is not worse.
