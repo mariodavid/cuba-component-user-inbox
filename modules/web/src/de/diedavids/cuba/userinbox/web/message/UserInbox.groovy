@@ -6,10 +6,8 @@ import com.haulmont.cuba.core.global.LoadContext
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.gui.WindowManager
 import com.haulmont.cuba.gui.components.AbstractLookup
-import com.haulmont.cuba.gui.components.Component
 import com.haulmont.cuba.gui.components.Frame
 import com.haulmont.cuba.gui.components.Table
-import com.haulmont.cuba.gui.components.actions.BaseAction
 import com.haulmont.cuba.gui.components.actions.CreateAction
 import com.haulmont.cuba.gui.components.actions.EditAction
 import com.haulmont.cuba.gui.data.CollectionDatasource
@@ -20,11 +18,11 @@ import javax.inject.Named
 
 class UserInbox extends AbstractLookup {
 
-    @Named("messagesTable.create")
+    @Named('messagesTable.create')
     CreateAction createAction
 
 
-    @Named("messagesTable.edit")
+    @Named('messagesTable.edit')
     EditAction editAction
 
     @Inject
@@ -57,6 +55,7 @@ class UserInbox extends AbstractLookup {
         showNotification(messages.formatMessage(getClass(), 'messageSend'), Frame.NotificationType.TRAY)
     }
 
+    @SuppressWarnings('UnusedMethodParameter')
     void openEntity(Message item, String columnId) {
         openEditor(findRecordInstance(item), WindowManager.OpenType.NEW_TAB)
     }

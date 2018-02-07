@@ -54,7 +54,7 @@ class MessageServiceBean implements MessageService {
     }
 
     protected Message createMessageInstance() {
-        metadata.create(Message.class)
+        metadata.create(Message)
     }
 
     protected void setRecordToMessage(Entity entityReference, Message message) {
@@ -72,7 +72,7 @@ class MessageServiceBean implements MessageService {
     int countUnreadMessagesForCurrentUser() {
         LoadContext loadContext = LoadContext.create(Message)
                 .setQuery(LoadContext.createQuery('select e from ddcui$Message e where e.receiver.id = :userId and e.read = FALSE')
-                .setParameter("userId", currentUser.id))
+                .setParameter('userId', currentUser.id))
 
         dataManager.getCount(loadContext)
     }

@@ -31,7 +31,7 @@ This CUBA component gives users a mailbox for user to user and system to user me
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
-| 6.6.x            | 0.1.x          |
+| 6.8.x            | 0.1.x          |
 
 The latest version is: `0.1.0`
 

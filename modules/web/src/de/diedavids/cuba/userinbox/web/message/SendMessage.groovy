@@ -15,6 +15,6 @@ class SendMessage extends AbstractEditor<Message> {
     @Override
     protected boolean preCommit() {
         item.sender = userSession.currentOrSubstitutedUser
-        return super.preCommit()
+        super.preCommit()
     }
 }

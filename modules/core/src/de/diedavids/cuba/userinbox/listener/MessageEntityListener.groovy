@@ -8,17 +8,15 @@ import de.diedavids.cuba.userinbox.entity.Message
 
 import javax.inject.Inject
 
-@Component("ddcui_MessageEntityListener")
-public class MessageEntityListener implements BeforeInsertEntityListener<Message> {
+@Component('ddcui_MessageEntityListener')
+class MessageEntityListener implements BeforeInsertEntityListener<Message> {
 
     @Inject
     TimeSource timeSource
 
     @Override
-    public void onBeforeInsert(Message entity, EntityManager entityManager) {
-        if (!entity.receivedAt) {
-            entity.receivedAt = timeSource.currentTimestamp()
-        }
+    void onBeforeInsert(Message entity, EntityManager entityManager) {
+        entity.receivedAt = entity.receivedAt ?: timeSource.currentTimestamp()
     }
 
 }
