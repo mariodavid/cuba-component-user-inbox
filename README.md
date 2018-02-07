@@ -1,5 +1,6 @@
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.org/mariodavid/cuba-component-user-inbox.svg?branch=master)](https://travis-ci.org/mariodavid/cuba-component-user-inbox)
+[ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/cuba-component-user-inbox/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/cuba-component-user-inbox/_latestVersion)
 
 # CUBA Platform Component - User Inbox
 
@@ -33,13 +34,14 @@ This CUBA component gives users a mailbox for user to user and system to user me
 | ---------------- | -------------- |
 | 6.8.x            | 0.1.x          |
 
-The latest version is: `0.1.0`
+The latest version is: [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/cuba-component-user-inbox/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/cuba-component-user-inbox/_latestVersion)
 
 Add custom application component to your project:
 
 * Artifact group: `de.diedavids.cuba.userinbox`
 * Artifact name: `user-inbox-global`
 * Version: *add-on version*
+
 
 
 ## Using the inbox as a user
