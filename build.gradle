@@ -41,7 +41,7 @@ cuba {
     artifact {
         group = 'de.diedavids.cuba.userinbox'
         version = '0.1'
-        isSnapshot = true
+        isSnapshot = false
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
