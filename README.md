@@ -129,4 +129,12 @@ One of these two classes can be used as the mainwinow through the following defi
 
 You can also extend this screens, so that you can add your own (screen-) logic to the mainwindow.
  
- 
+##### unread messages counter in predefined main windows screens
+
+In order to display the messages that are marked as unread, the main windows will be refreshed in a particular interval.
+The logic is the same as the Count script which is available within the [Application Folders](https://doc.cuba-platform.com/manual-6.8/application_folder.html)
+feature of CUBA itself. 
+
+Therefore the refresh period can be adjusted by the existing application property:
+[cuba.web.appFoldersRefreshPeriodSec](https://doc.cuba-platform.com/manual-6.8/app_properties_reference.html#cuba.web.appFoldersRefreshPeriodSec)
+in the `web-app.properties` file.

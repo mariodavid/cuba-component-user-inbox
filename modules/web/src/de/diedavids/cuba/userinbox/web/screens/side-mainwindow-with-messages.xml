@@ -5,7 +5,7 @@
         messagesPack="de.diedavids.cuba.userinbox.web.screens"
         xmlns:main="http://schemas.haulmont.com/cuba/mainwindow.xsd">
     <timers>
-        <timer delay="3000" autostart="true" repeating="true" onTimer="updateCounters"/>
+        <timer id="updateCountersTimer" delay="3000"  autostart="true" repeating="true" onTimer="updateCounters"/>
     </timers>
     <layout expand="horizontalWrap">
         <hbox id="horizontalWrap"

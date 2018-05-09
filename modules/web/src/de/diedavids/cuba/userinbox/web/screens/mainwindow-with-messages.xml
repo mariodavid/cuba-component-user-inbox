@@ -4,17 +4,20 @@
         extends="/com/haulmont/cuba/web/app/mainwindow/mainwindow.xml"
         messagesPack="de.diedavids.cuba.userinbox.web.screens"
         xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd">
-    <dialogMode height="600"
-                width="800"/>
+    <timers>
+        <timer id="updateCountersTimer" delay="3000" autostart="true" repeating="true" onTimer="updateCounters"/>
+    </timers>
     <actions>
-        <action id="openMessagesAction" invoke="openMessages"/>
+        <action id="openMessagesAction"
+                invoke="openMessages"
+                icon="font-icon:ENVELOPE_O"
+        />
     </actions>
     <layout>
         <hbox id="titleBar">
             <button id="messagesBtn"
                     ext:index="2"
-                    action="openMessagesAction"
-                    icon="font-icon:ENVELOPE_O"/>
+                    action="openMessagesAction"/>
         </hbox>
     </layout>
 </window>
