@@ -12,27 +12,21 @@ This CUBA component gives users a mailbox for user to user and system to user me
 1. Add the following maven repository `https://dl.bintray.com/mariodavid/cuba-components` to the build.gradle of your CUBA application:
 
 
-    buildscript {
-        
-        //...
-        
-        repositories {
-        
-            // ...
-        
+
+        buildscript {
+          repositories {
             maven {
-                url  "https://dl.bintray.com/mariodavid/cuba-components"
+              url  "https://dl.bintray.com/mariodavid/cuba-components"
             }
-        }
-        
-        // ...
-    }
+          }
+       }
+    
 
 2. Select a version of the add-on which is compatible with the platform version used in your project:
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
-| 6.8.x            | 0.1.x          |
+| 6.8.x            | 0.1.x - 0.2.x  |
 
 The latest version is: [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/cuba-component-user-inbox/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/cuba-component-user-inbox/_latestVersion)
 
@@ -42,6 +36,11 @@ Add custom application component to your project:
 * Artifact name: `user-inbox-global`
 * Version: *add-on version*
 
+```groovy
+dependencies {
+  appComponent("de.diedavids.cuba.dataimport:dataimport-global:*addon-version*")
+}
+```
 
 
 ## Using the inbox as a user

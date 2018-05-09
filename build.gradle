@@ -41,7 +41,7 @@ cuba {
     artifact {
         group = 'de.diedavids.cuba.userinbox'
         version = '0.2.0'
-        isSnapshot = true
+        isSnapshot = false
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
@@ -60,6 +60,48 @@ cuba {
         vcs = 'Git'
     }
 }
+
+
+subprojects {
+    apply plugin: 'com.jfrog.bintray'
+
+    bintray {
+        user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('UPLOAD_REPOSITORY_USERNAME')
+        key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('UPLOAD_REPOSITORY_PASSWORD')
+
+        configurations = ['archives']
+
+        publish = true
+
+        override = false
+
+        // metadata
+        pkg {
+            repo = 'cuba-components'
+            name = 'cuba-component-user-inbox'
+            desc = 'CUBA component that gives users a mailbox for user2user and system2user messages'
+            userOrg = 'mariodavid'
+
+            websiteUrl = 'https://github.com/mariodavid/cuba-component-user-inbox'
+            issueTrackerUrl = 'https://github.com/mariodavid/cuba-component-user-inbox/issues'
+            vcsUrl = 'https://github.com/mariodavid/cuba-component-user-inbox.git'
+
+            licenses = ["Apache-2.0"]
+
+            labels = ['user-inbox', 'user-messaging', 'cuba-patform', 'cuba-component']
+            githubRepo = 'mariodavid/cuba-component-user-inbox'
+            githubReleaseNotesFile = 'CHANGELOG.md'
+
+            version {
+                name = "${cuba.artifact.version}"
+                desc = ''
+                released  = new Date()
+                vcsTag = "${cuba.artifact.version}"
+            }
+        }
+    }
+}
+
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
