@@ -6,6 +6,7 @@ import com.haulmont.cuba.gui.components.Embedded;
 import com.haulmont.cuba.gui.components.Timer;
 import com.haulmont.cuba.gui.components.mainwindow.FtsField;
 import com.haulmont.cuba.gui.components.mainwindow.SideMenu;
+import com.haulmont.cuba.web.WebConfig;
 import de.diedavids.cuba.userinbox.service.MessageService;
 
 import javax.inject.Inject;
@@ -25,6 +26,13 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
     @Inject
     private MessageService messageService;
 
+
+    @Inject
+    private Timer updateCountersTimer;
+
+    @Inject
+    private WebConfig webConfig;
+
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
@@ -35,11 +43,21 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
         initLogoImage(logoImage);
         initFtsField(ftsField);
 
+        initUpdateCounterTimerDelay();
         initMessagesMenuItem();
 
         sideMenu.setSelectOnClick(true);
 
+
+
     }
+
+
+    private void initUpdateCounterTimerDelay() {
+        int period = webConfig.getAppFoldersRefreshPeriodSec() * 1000;
+        updateCountersTimer.setDelay(period);
+    }
+
 
     private void initMessagesMenuItem() {
         SideMenu.MenuItem messagesMenuItem = sideMenu.createMenuItem("messages");

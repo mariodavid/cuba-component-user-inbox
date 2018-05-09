@@ -4,13 +4,15 @@
 
 
     <!--
+
     <screen id="mainWindow"
             template="de/diedavids/cuba/userinbox/web/screens/mainwindow-with-messages.xml"/>
 
-    -->
+
     <screen id="mainWindow"
             template="de/diedavids/cuba/userinbox/web/screens/side-mainwindow-with-messages.xml"/>
 
+    -->
     <screen id="user-inbox"
             template="de/diedavids/cuba/userinbox/web/message/user-inbox.xml"/>
     <screen id="send-message"
