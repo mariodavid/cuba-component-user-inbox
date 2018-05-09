@@ -6,6 +6,7 @@ import com.haulmont.cuba.core.global.LoadContext
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.gui.WindowManager
 import com.haulmont.cuba.gui.components.AbstractLookup
+import com.haulmont.cuba.gui.components.Action
 import com.haulmont.cuba.gui.components.Frame
 import com.haulmont.cuba.gui.components.Table
 import com.haulmont.cuba.gui.components.actions.CreateAction
@@ -24,6 +25,9 @@ class UserInbox extends AbstractLookup {
 
     @Named('messagesTable.edit')
     EditAction editAction
+
+    @Named('messagesTable.toggleRead')
+    Action toggleReadAction
 
     @Inject
     Table<Message> messagesTable
@@ -48,8 +52,13 @@ class UserInbox extends AbstractLookup {
                 showMessageSendNotification()
             }
         }
-    }
 
+
+        messagesDs.addItemChangeListener(new ToggleReadActionListener(
+                messages: messages,
+                toggleReadAction: toggleReadAction
+        ))
+    }
 
     private showMessageSendNotification() {
         showNotification(messages.formatMessage(getClass(), 'messageSend'), Frame.NotificationType.TRAY)
@@ -68,7 +77,7 @@ class UserInbox extends AbstractLookup {
         LoadContext loadContext = LoadContext.create(entityClass)
                 .setId(getRecordId(item))
 
-         dataManager.load(loadContext)
+        dataManager.load(loadContext)
     }
 
     protected UUID getRecordId(Message item) {
@@ -77,5 +86,15 @@ class UserInbox extends AbstractLookup {
 
     protected Class getClassFromMessageRecord(Message item) {
         metadata.getClass(item.entityReferenceClass)?.javaClass
+    }
+
+    void toggleRead() {
+
+
+        def message = messagesTable.singleSelected
+        message.read = !message.read
+
+        messagesDs.commit()
+
     }
 }

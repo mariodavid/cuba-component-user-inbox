@@ -31,6 +31,12 @@
                         caption="msg://newMessage"/>
                 <action id="edit" caption="mainMsg://actions.View" icon="font-icon:SEARCH"/>
                 <action id="remove"/>
+                <action id="toggleRead"
+                        invoke="toggleRead"
+                        caption="msg://markAsRead"
+                        icon="font-icon:CHECK_SQUARE_O"
+                        trackSelection="true"
+                />
             </actions>
             <columns>
                 <column id="sender"/>
@@ -49,6 +55,8 @@
                         action="messagesTable.edit"/>
                 <button id="removeBtn"
                         action="messagesTable.remove"/>
+                <button id="toggleReadBtn"
+                        action="messagesTable.toggleRead"/>
             </buttonsPanel>
         </groupTable>
     </layout>
