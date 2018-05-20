@@ -20,10 +20,6 @@ class MessageServiceBean implements MessageService {
     @Inject
     UserSessionSource userSessionSource
 
-    @Inject
-    Security security
-
-
     @Override
     void sendSystemMessage(User receiver, String subject, String messageText, Entity entityReference) {
         sendMessageFromUser(null, receiver, subject, messageText, entityReference)
@@ -42,7 +38,7 @@ class MessageServiceBean implements MessageService {
     protected void sendMessageFromUser(User sender, User receiver, String subject, String messageText, Entity entityReference = null) {
         Message message = createMessageInstance()
 
-        setRecordToMessage(entityReference, message)
+        message.shareable = entityReference
 
         message.sender = sender
         message.receiver = receiver
@@ -55,12 +51,6 @@ class MessageServiceBean implements MessageService {
 
     protected Message createMessageInstance() {
         metadata.create(Message)
-    }
-
-    protected void setRecordToMessage(Entity entityReference, Message message) {
-        message.entityReferenceClass = entityReference.metaClass.name
-        message.entityReferenceId = entityReference.id as String
-        message.entityCaption = entityReference.instanceName
     }
 
     private User getCurrentUser() {

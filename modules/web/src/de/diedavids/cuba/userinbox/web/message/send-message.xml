@@ -24,8 +24,10 @@
         <fieldGroup id="fieldGroup"
                     datasource="messageDs">
             <column width="500px">
-                <field property="receiver" optionsDatasource="userTypesDs"/>
+                <field optionsDatasource="userTypesDs"
+                       property="receiver"/>
                 <field property="subject"/>
+                <field property="shareable"/>
             </column>
         </fieldGroup>
         <richTextArea id="messageTextTextArea"

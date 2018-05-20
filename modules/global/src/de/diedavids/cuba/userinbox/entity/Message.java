@@ -1,22 +1,18 @@
 package de.diedavids.cuba.userinbox.entity;
 
+import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.cuba.core.entity.StandardEntity;
-import com.haulmont.cuba.core.entity.annotation.Listeners;
-import com.haulmont.cuba.core.entity.annotation.Lookup;
-import com.haulmont.cuba.core.entity.annotation.LookupType;
+import com.haulmont.cuba.core.entity.annotation.*;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.security.entity.User;
+import de.diedavids.cuba.entitysoftreference.EntitySoftReferenceConverter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.annotation.PostConstruct;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import de.diedavids.cuba.entitysoftreference.EntitySoftReferenceDatatype;
 
 @Listeners("ddcui_MessageEntityListener")
 @Table(name = "DDCUI_MESSAGE")
@@ -37,6 +33,13 @@ public class Message extends StandardEntity {
     @Column(name = "SUBJECT")
     protected String subject;
 
+
+    @SystemLevel
+    @Convert(converter = EntitySoftReferenceConverter.class)
+    @MetaProperty(datatype = "EntitySoftReference")
+    @Column(name = "SHAREABLE")
+    protected com.haulmont.cuba.core.entity.Entity shareable;
+
     @Column(name = "ENTITY_REFERENCE_ID")
     protected String entityReferenceId;
 
@@ -46,6 +49,7 @@ public class Message extends StandardEntity {
     @Column(name = "ENTITY_CAPTION")
     protected String entityCaption;
 
+    
     @Lob
     @Column(name = "TEXT")
     protected String text;
@@ -58,6 +62,15 @@ public class Message extends StandardEntity {
     @NotNull
     @Column(name = "RECEIVED_AT", nullable = false)
     protected Date receivedAt;
+
+    public void setShareable(com.haulmont.cuba.core.entity.Entity shareable) {
+        this.shareable = shareable;
+    }
+
+    public com.haulmont.cuba.core.entity.Entity getShareable() {
+        return shareable;
+    }
+
 
     public void setReceivedAt(Date receivedAt) {
         this.receivedAt = receivedAt;
@@ -136,4 +149,17 @@ public class Message extends StandardEntity {
     }
 
 
+
+   @PostConstruct
+   protected void initSender() {
+       setSender(getCurrentUser());
+   }
+
+    private User getCurrentUser() {
+        return getUserSessionSource().getUserSession().getCurrentOrSubstitutedUser();
+    }
+
+    private UserSessionSource getUserSessionSource() {
+        return AppBeans.get(UserSessionSource.class);
+    }
 }

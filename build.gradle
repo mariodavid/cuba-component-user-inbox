@@ -13,6 +13,9 @@ buildscript {
         maven {
             url  "https://dl.bintray.com/balvi/cuba-components"
         }
+        maven {
+            url  "https://dl.bintray.com/mariodavid/cuba-components"
+        }
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -111,6 +114,7 @@ subprojects {
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
     appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.5.0")
+    appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.2.0")
 
 }
 
