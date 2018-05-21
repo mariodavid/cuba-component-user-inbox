@@ -17,14 +17,17 @@
         <fieldGroup id="fieldGroup"
                     datasource="messageDs">
             <column width="500px">
-                <field property="receiver" editable="false"/>
-                <field property="subject" editable="false"/>
+                <field editable="false"
+                       property="receiver"/>
+                <field editable="false"
+                       property="subject"/>
+                <field property="shareable"/>
             </column>
         </fieldGroup>
         <richTextArea id="messageTextTextArea"
                       datasource="messageDs"
-                      property="text"
                       editable="false"
+                      property="text"
                       width="100%"/>
         <frame id="windowActions"
                screen="editWindowActions"/>

@@ -12,6 +12,7 @@ create table DDCUI_MESSAGE (
     SENDER_ID varchar(36),
     RECEIVER_ID varchar(36) not null,
     SUBJECT varchar(255),
+    SHAREABLE varchar(255),
     ENTITY_REFERENCE_ID varchar(255),
     ENTITY_REFERENCE_CLASS varchar(255),
     ENTITY_CAPTION varchar(255),

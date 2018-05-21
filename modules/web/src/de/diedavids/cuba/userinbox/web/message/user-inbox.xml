@@ -41,7 +41,7 @@
             <columns>
                 <column id="sender"/>
                 <column id="subject"/>
-                <column id="entityCaption" link="true" linkInvoke="openEntity"/>
+                <column id="shareable" link="true" sortable="false"/>
                 <column id="read"/>
                 <column id="receivedAt"/>
             </columns>
