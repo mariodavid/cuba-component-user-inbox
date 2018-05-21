@@ -42,6 +42,16 @@ dependencies {
 }
 ```
 
+### NOTE: Dependency: declarative-controllers
+This application component requires `declarative-controllers` as another dependency you have to add to your application.
+
+The reason is, that you need to extend your screen from `AnnotatableAbstractLookup` instead of `AbstractLookup`.
+This superclass is part of the app-component: [cuba-component-declarative-controllers](https://github.com/balvi/cuba-component-declarative-controllers).
+
+Technically it is not strictly required to directly add the dependency to `declarative-controllers`, since `user-inbox` already has a dependency on it.
+
+However: since you directly depend on the app component (with extending your classes from `AnnotatableAbstractLookup`), 
+it is a best practice to explicitly declare the dependency to it.
 
 ## Using the inbox as a user
 
@@ -71,12 +81,37 @@ This screen allows to manually send a message. A message contains a subject and 
 
 This feature can sometimes be helpful but oftentimes sending a regular email is not worse.
 
-##### Context-based messages
+#### Context-based messages
 
 Therefore there is another option to send a Message. In this case it is a message that is send through the context of a particular entity.
 
 This is comparable of sending a email with a link that points to a particular customer / order etc. in your application together with the information from the sender.
 
+##### Share entity instances
+
+The way to send context-based messages is to use the `@Shareable` annotation. The annotation is used in any Entity browse / editor screen.
+
+Example:
+
+```
+@Shareable(listComponent = "customersTable")
+public class CustomerBrowse extends AnnotatableAbstractLookup {
+}
+```
+
+For the `@Shareable` annotation you need to define the list component on which it should add the share button.
+Normally this is the `id` of the table you defined in your browse screen.
+
+This annotation will create a button in the buttonsPanel of the table and add the share button after the default CUBA buttons.
+
+The `@Shareable` annotations can be customized through the following attributes:
+
+* `String listComponent` - the id of the list component / table where the button will be added - REQUIRED
+* `String buttonId` - the id of the newly created button that will be created ("attachmentBtn" by default)
+* `String buttonsPanel` - the id of the buttons panel where the new button will be added ("buttonsPanel" by default)
+
+
+more information on this topic can be found here: [balvi/declarative-controllers](https://github.com/balvi/cuba-component-declarative-controllers)
 
 ### Send system messages (programmatically)
 

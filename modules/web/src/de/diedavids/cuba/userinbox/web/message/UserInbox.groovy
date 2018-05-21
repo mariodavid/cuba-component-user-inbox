@@ -19,9 +19,11 @@ import javax.inject.Named
 
 class UserInbox extends AbstractLookup {
 
+
+    private static final String SEND_MESSAGE_SCREEN_ID = 'send-message'
+
     @Named('messagesTable.create')
     CreateAction createAction
-
 
     @Named('messagesTable.edit')
     EditAction editAction
@@ -44,7 +46,7 @@ class UserInbox extends AbstractLookup {
     @Override
     void init(Map<String, Object> params) {
         super.init(params)
-        createAction.windowId = 'send-message'
+        createAction.windowId = SEND_MESSAGE_SCREEN_ID
         createAction.afterCommitHandler = new CreateAction.AfterCommitHandler() {
             @Override
             void handle(Entity entity) {
@@ -52,7 +54,6 @@ class UserInbox extends AbstractLookup {
                 showMessageSendNotification()
             }
         }
-
 
         messagesDs.addItemChangeListener(new ToggleReadActionListener(
                 messages: messages,
@@ -64,37 +65,9 @@ class UserInbox extends AbstractLookup {
         showNotification(messages.formatMessage(getClass(), 'messageSend'), Frame.NotificationType.TRAY)
     }
 
-    @SuppressWarnings('UnusedMethodParameter')
-    void openEntity(Message item, String columnId) {
-        openEditor(findRecordInstance(item), WindowManager.OpenType.NEW_TAB)
-    }
-
-
-    protected Entity findRecordInstance(Message item) {
-
-        Class entityClass = getClassFromMessageRecord(item)
-
-        LoadContext loadContext = LoadContext.create(entityClass)
-                .setId(getRecordId(item))
-
-        dataManager.load(loadContext)
-    }
-
-    protected UUID getRecordId(Message item) {
-        UUID.fromString(item.entityReferenceId)
-    }
-
-    protected Class getClassFromMessageRecord(Message item) {
-        metadata.getClass(item.entityReferenceClass)?.javaClass
-    }
-
     void toggleRead() {
-
-
         def message = messagesTable.singleSelected
         message.read = !message.read
-
         messagesDs.commit()
-
     }
 }
