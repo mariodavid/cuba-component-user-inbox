@@ -40,16 +40,31 @@ public class Message extends StandardEntity {
     @Column(name = "SHAREABLE")
     protected com.haulmont.cuba.core.entity.Entity shareable;
 
+    /**
+     * @deprecated use Message.shareable instead
+     */
+    @Deprecated
+    @SystemLevel
     @Column(name = "ENTITY_REFERENCE_ID")
     protected String entityReferenceId;
 
+    /**
+     * @deprecated use Message.shareable instead
+     */
+    @Deprecated
+    @SystemLevel
     @Column(name = "ENTITY_REFERENCE_CLASS")
     protected String entityReferenceClass;
 
+    /**
+     * @deprecated use Message.shareable instead
+     */
+    @Deprecated
+    @SystemLevel
     @Column(name = "ENTITY_CAPTION")
     protected String entityCaption;
 
-    
+
     @Lob
     @Column(name = "TEXT")
     protected String text;

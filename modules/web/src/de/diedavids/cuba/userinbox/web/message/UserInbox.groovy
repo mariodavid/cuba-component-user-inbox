@@ -2,9 +2,7 @@ package de.diedavids.cuba.userinbox.web.message
 
 import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.DataManager
-import com.haulmont.cuba.core.global.LoadContext
 import com.haulmont.cuba.core.global.Metadata
-import com.haulmont.cuba.gui.WindowManager
 import com.haulmont.cuba.gui.components.AbstractLookup
 import com.haulmont.cuba.gui.components.Action
 import com.haulmont.cuba.gui.components.Frame
