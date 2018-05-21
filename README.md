@@ -26,7 +26,7 @@ This CUBA component gives users a mailbox for user to user and system to user me
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
-| 6.8.x            | 0.1.x - 0.2.x  |
+| 6.8.x            | 0.1.x - 0.3.x  |
 
 The latest version is: [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/cuba-component-user-inbox/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/cuba-component-user-inbox/_latestVersion)
 
@@ -41,6 +41,10 @@ dependencies {
   appComponent("de.diedavids.cuba.userinbox:user-inbox-global:*addon-version*")
 }
 ```
+
+### NOTE: BREAKING CHANGE in 0.3.0
+There is a breaking change if you update from 0.2.0 to 0.3.0. The mechanism how the record references are stored to a message
+changed. It can be resolved with manual action. See [CHANGELOG.md](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/CHANGELOG.md) for more information.
 
 ### NOTE: Dependency: declarative-controllers
 This application component requires `declarative-controllers` as another dependency you have to add to your application.
