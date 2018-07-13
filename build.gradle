@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.8.8'
+    ext.cubaVersion = '6.9.2'
     repositories {
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
@@ -35,7 +35,7 @@ def coreModule = project(':user-inbox-core')
 def guiModule = project(':user-inbox-gui')
 def webModule = project(':user-inbox-web')
 
-def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
+def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
 
 apply(plugin: 'idea')
@@ -113,8 +113,8 @@ subprojects {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.5.0")
     appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.2.0")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.6.0")
 
 }
 
@@ -267,7 +267,7 @@ configure(coreModule) {
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
         dbms = 'hsql'
         host = 'localhost'
-        dbName = 'ddcui'
+        dbName = 'ddcui-create-test'
         dbUser = 'sa'
         dbPassword = ''
     }
@@ -275,7 +275,7 @@ configure(coreModule) {
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
         dbms = 'hsql'
         host = 'localhost'
-        dbName = 'ddcui'
+        dbName = 'ddcui-create-test'
         dbUser = 'sa'
         dbPassword = ''
     }
