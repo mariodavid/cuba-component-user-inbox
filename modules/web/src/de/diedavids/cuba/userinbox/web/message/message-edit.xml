@@ -18,7 +18,7 @@
                     datasource="messageDs">
             <column width="500px">
                 <field editable="false"
-                       property="receiver"/>
+                       property="sender"/>
                 <field editable="false"
                        property="subject"/>
                 <field property="shareable"/>
