@@ -54,16 +54,6 @@ cuba {
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
     }
-    uploadRepository {
-        if (cuba.artifact.isSnapshot) {
-            url = System.properties['uploadRepositorySnapshot'] ?: System.env.UPLOAD_REPOSITORY_SNAPSHOT
-        } else {
-            url = System.properties['uploadRepositoryRelease'] ?: System.env.UPLOAD_REPOSITORY_RELEASE ?: bintrayRepositoryUrl
-        }
-
-        user = System.properties['uploadRepositoryUsername'] ?: System.env.UPLOAD_REPOSITORY_USERNAME
-        password = System.properties['uploadRepositoryPassword'] ?:System.env.UPLOAD_REPOSITORY_PASSWORD
-    }
     ide {
         vcs = 'Git'
     }
@@ -113,7 +103,7 @@ subprojects {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.2.0")
+    appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.3.0")
     appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.6.0")
 
 }

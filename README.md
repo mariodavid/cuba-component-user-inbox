@@ -14,6 +14,7 @@ This CUBA component gives users a mailbox for user to user and system to user me
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
+| 6.9.x            | 0.4.x          |
 | 6.8.x            | 0.1.x - 0.3.x  |
 
 The latest version is: [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/cuba-component-user-inbox/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/cuba-component-user-inbox/_latestVersion)
