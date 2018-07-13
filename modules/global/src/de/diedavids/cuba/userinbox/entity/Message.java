@@ -12,11 +12,11 @@ import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import de.diedavids.cuba.entitysoftreference.EntitySoftReferenceDatatype;
+import com.haulmont.cuba.core.entity.Entity;
 
 @Listeners("ddcui_MessageEntityListener")
 @Table(name = "DDCUI_MESSAGE")
-@Entity(name = "ddcui$Message")
+@javax.persistence.Entity(name = "ddcui$Message")
 public class Message extends StandardEntity {
     private static final long serialVersionUID = -631256156050655713L;
 
@@ -38,31 +38,7 @@ public class Message extends StandardEntity {
     @Convert(converter = EntitySoftReferenceConverter.class)
     @MetaProperty(datatype = "EntitySoftReference")
     @Column(name = "SHAREABLE")
-    protected com.haulmont.cuba.core.entity.Entity shareable;
-
-    /**
-     * @deprecated use Message.shareable instead
-     */
-    @Deprecated
-    @SystemLevel
-    @Column(name = "ENTITY_REFERENCE_ID")
-    protected String entityReferenceId;
-
-    /**
-     * @deprecated use Message.shareable instead
-     */
-    @Deprecated
-    @SystemLevel
-    @Column(name = "ENTITY_REFERENCE_CLASS")
-    protected String entityReferenceClass;
-
-    /**
-     * @deprecated use Message.shareable instead
-     */
-    @Deprecated
-    @SystemLevel
-    @Column(name = "ENTITY_CAPTION")
-    protected String entityCaption;
+    protected Entity shareable;
 
 
     @Lob
@@ -78,13 +54,14 @@ public class Message extends StandardEntity {
     @Column(name = "RECEIVED_AT", nullable = false)
     protected Date receivedAt;
 
-    public void setShareable(com.haulmont.cuba.core.entity.Entity shareable) {
+    public Entity getShareable() {
+        return shareable;
+    }
+
+    public void setShareable(Entity shareable) {
         this.shareable = shareable;
     }
 
-    public com.haulmont.cuba.core.entity.Entity getShareable() {
-        return shareable;
-    }
 
 
     public void setReceivedAt(Date receivedAt) {
@@ -95,14 +72,6 @@ public class Message extends StandardEntity {
         return receivedAt;
     }
 
-
-    public void setEntityCaption(String entityCaption) {
-        this.entityCaption = entityCaption;
-    }
-
-    public String getEntityCaption() {
-        return entityCaption;
-    }
 
 
     public void setRead(Boolean read) {
@@ -120,22 +89,6 @@ public class Message extends StandardEntity {
 
     public String getSubject() {
         return subject;
-    }
-
-    public void setEntityReferenceId(String entityReferenceId) {
-        this.entityReferenceId = entityReferenceId;
-    }
-
-    public String getEntityReferenceId() {
-        return entityReferenceId;
-    }
-
-    public void setEntityReferenceClass(String entityReferenceClass) {
-        this.entityReferenceClass = entityReferenceClass;
-    }
-
-    public String getEntityReferenceClass() {
-        return entityReferenceClass;
     }
 
     public void setText(String text) {
