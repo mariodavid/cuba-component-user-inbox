@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2019-03-14
+
+### Dependencies
+- CUBA 6.10.x
+- declarative-controllers 0.7.0
+- entity-soft-reference 0.4.0
+
 ## [0.4.0] - 2018-07-13
 
 ### Change
