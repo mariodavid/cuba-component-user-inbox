@@ -3,6 +3,7 @@ package de.diedavids.cuba.userinbox.web.screens;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.AbstractMainWindow;
 import com.haulmont.cuba.gui.components.Embedded;
+import com.haulmont.cuba.gui.components.Image;
 import com.haulmont.cuba.gui.components.Timer;
 import com.haulmont.cuba.gui.components.mainwindow.FtsField;
 import com.haulmont.cuba.gui.components.mainwindow.SideMenu;
@@ -18,7 +19,7 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
     private FtsField ftsField;
 
     @Inject
-    private Embedded logoImage;
+    private Image logoImage;
 
     @Inject
     private SideMenu sideMenu;
@@ -37,7 +38,7 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
     public void init(Map<String, Object> params) {
         super.init(params);
 
-        sideMenu.requestFocus();
+        sideMenu.focus();
 
         initLayoutAnalyzerContextMenu(logoImage);
         initLogoImage(logoImage);

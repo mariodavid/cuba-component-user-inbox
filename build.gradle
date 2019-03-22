@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.10.8'
+    ext.cubaVersion = '7.0.2'
     repositories {
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
@@ -40,7 +40,6 @@ def webModule = project(":${modulePrefix}-web" )
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
 
-apply(plugin: 'idea')
 apply(plugin: 'cuba')
 
 
@@ -105,8 +104,8 @@ subprojects {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.4.0")
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.7.0")
+    appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.5.0")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.8.0")
 
 }
 
@@ -148,7 +147,6 @@ test.finalizedBy(project.tasks.coberturaCheck)
 configure([globalModule, coreModule, guiModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
-    apply(plugin: 'idea')
     apply(plugin: 'cuba')
 
     dependencies {
@@ -213,6 +211,12 @@ configure([globalModule, coreModule, guiModule, webModule]) {
 }
 
 configure(globalModule) {
+    dependencies {
+        if (!JavaVersion.current().isJava8()) {
+            runtime('javax.xml.bind:jaxb-api:2.3.1')
+            runtime('org.glassfish.jaxb:jaxb-runtime:2.3.1')
+        }
+    }
     entitiesEnhancing {
         main { enabled = true }
     }
@@ -236,7 +240,7 @@ configure(coreModule) {
 
     dependencies {
         compile(globalModule)
-        provided(servletApi)
+        compileOnly(servletApi)
         jdbc(hsql)
         testRuntime(hsql)
 
@@ -294,7 +298,7 @@ configure(webModule) {
     }
 
     dependencies {
-        provided(servletApi)
+        compileOnly(servletApi)
         compile(guiModule)
 
     }
@@ -358,9 +362,6 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy" , ":${modulePref
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.3.1'
-}
 
 apply from: 'extra.gradle'
 
