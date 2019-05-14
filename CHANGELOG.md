@@ -4,7 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.4.0] - 2019-03-14
+## [0.6.0] - 2019-05-14
+
+### Added
+- Support for CUBA 7
+- `WithEntitySharingSupport` interface for CUBA 7 UI browse screens as a replacement for `@Shareable`
+
+### Dependencies
+- CUBA 7.0.x
+- declarative-controllers 0.8.0
+- entity-soft-reference 0.5.0
+
+## [0.5.0] - 2019-03-14
 
 ### Dependencies
 - CUBA 6.10.x
