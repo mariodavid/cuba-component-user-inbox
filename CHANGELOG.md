@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Dependencies
 - CUBA 7.0.x
 - declarative-controllers 0.8.0
-- entity-soft-reference 0.5.0
+- entity-soft-reference 0.5.1
 
 ## [0.5.0] - 2019-03-14
 
