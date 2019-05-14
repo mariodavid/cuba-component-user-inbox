@@ -7,9 +7,6 @@ import com.haulmont.cuba.gui.ScreenBuilders
 import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.AbstractLookup
 import com.haulmont.cuba.gui.components.Action
-import com.haulmont.cuba.gui.components.Component
-import com.haulmont.cuba.gui.components.Frame
-import com.haulmont.cuba.gui.components.LinkButton
 import com.haulmont.cuba.gui.components.Table
 import com.haulmont.cuba.gui.components.actions.CreateAction
 import com.haulmont.cuba.gui.components.actions.EditAction
@@ -52,9 +49,21 @@ class UserInbox extends AbstractLookup {
     @Inject
     Metadata metadata
 
+    private static final String SHAREABLE_ATTRIBUTE_KEY = 'shareable'
+
     @Override
     void init(Map<String, Object> params) {
         super.init(params)
+        initCreateAction()
+        initShareableTableColumn()
+
+        messagesDs.addItemChangeListener(new ToggleReadActionListener(
+                messages: messages,
+                toggleReadAction: toggleReadAction
+        ))
+    }
+
+    private void initCreateAction() {
         createAction.windowId = SEND_MESSAGE_SCREEN_ID
         createAction.afterCommitHandler = new CreateAction.AfterCommitHandler() {
             @Override
@@ -63,21 +72,19 @@ class UserInbox extends AbstractLookup {
                 showMessageSendNotification()
             }
         }
+    }
 
-        messagesDs.addItemChangeListener(new ToggleReadActionListener(
-                messages: messages,
-                toggleReadAction: toggleReadAction
-        ))
+    private initShareableTableColumn() {
 
-        messagesTable.addGeneratedColumn("shareable",
+        messagesTable.addGeneratedColumn(SHAREABLE_ATTRIBUTE_KEY,
                 new SoftReferenceInstanceNameTableColumnGenerator(
-                        "shareable",
+                        SHAREABLE_ATTRIBUTE_KEY,
                         uiComponents,
-                        metadata.getTools(),
+                        metadata.tools,
                         screenBuilders,
                         this
                 )
-        );
+        )
     }
 
     private showMessageSendNotification() {
