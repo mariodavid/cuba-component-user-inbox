@@ -3,13 +3,15 @@ package de.diedavids.cuba.userinbox.web.message
 import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.DataManager
 import com.haulmont.cuba.core.global.Metadata
+import com.haulmont.cuba.gui.ScreenBuilders
+import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.AbstractLookup
 import com.haulmont.cuba.gui.components.Action
-import com.haulmont.cuba.gui.components.Frame
 import com.haulmont.cuba.gui.components.Table
 import com.haulmont.cuba.gui.components.actions.CreateAction
 import com.haulmont.cuba.gui.components.actions.EditAction
 import com.haulmont.cuba.gui.data.CollectionDatasource
+import de.diedavids.cuba.entitysoftreference.web.SoftReferenceInstanceNameTableColumnGenerator
 import de.diedavids.cuba.userinbox.entity.Message
 
 import javax.inject.Inject
@@ -39,11 +41,29 @@ class UserInbox extends AbstractLookup {
     DataManager dataManager
 
     @Inject
+    UiComponents uiComponents
+
+    @Inject
+    ScreenBuilders screenBuilders
+
+    @Inject
     Metadata metadata
+
+    private static final String SHAREABLE_ATTRIBUTE_KEY = 'shareable'
 
     @Override
     void init(Map<String, Object> params) {
         super.init(params)
+        initCreateAction()
+        initShareableTableColumn()
+
+        messagesDs.addItemChangeListener(new ToggleReadActionListener(
+                messages: messages,
+                toggleReadAction: toggleReadAction
+        ))
+    }
+
+    private void initCreateAction() {
         createAction.windowId = SEND_MESSAGE_SCREEN_ID
         createAction.afterCommitHandler = new CreateAction.AfterCommitHandler() {
             @Override
@@ -52,15 +72,23 @@ class UserInbox extends AbstractLookup {
                 showMessageSendNotification()
             }
         }
+    }
 
-        messagesDs.addItemChangeListener(new ToggleReadActionListener(
-                messages: messages,
-                toggleReadAction: toggleReadAction
-        ))
+    private initShareableTableColumn() {
+
+        messagesTable.addGeneratedColumn(SHAREABLE_ATTRIBUTE_KEY,
+                new SoftReferenceInstanceNameTableColumnGenerator(
+                        SHAREABLE_ATTRIBUTE_KEY,
+                        uiComponents,
+                        metadata.tools,
+                        screenBuilders,
+                        this
+                )
+        )
     }
 
     private showMessageSendNotification() {
-        showNotification(messages.formatMessage(getClass(), 'messageSend'), Frame.NotificationType.TRAY)
+        showNotification(messages.formatMessage(getClass(), 'messageSend'), NotificationType.TRAY)
     }
 
     void toggleRead() {

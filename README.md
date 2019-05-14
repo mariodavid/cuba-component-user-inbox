@@ -14,6 +14,7 @@ This CUBA component gives users a mailbox for user to user and system to user me
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
+| 7.0.x            | 0.6.x          |
 | 6.10.x           | 0.5.x          |
 | 6.9.x            | 0.4.x          |
 | 6.8.x            | 0.1.x - 0.3.x  |
@@ -31,10 +32,6 @@ dependencies {
   appComponent("de.diedavids.cuba.userinbox:user-inbox-global:*addon-version*")
 }
 ```
-
-### NOTE: BREAKING CHANGE in 0.3.0
-There is a breaking change if you update from 0.2.0 to 0.3.0. The mechanism how the record references are stored to a message
-changed. It can be resolved with manual action. See [CHANGELOG.md](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/CHANGELOG.md) for more information.
 
 ### NOTE: Dependency: declarative-controllers
 This application component requires `declarative-controllers` as another dependency you have to add to your application.
@@ -81,9 +78,10 @@ Therefore there is another option to send a Message. In this case it is a messag
 
 This is comparable of sending a email with a link that points to a particular customer / order etc. in your application together with the information from the sender.
 
-##### Share entity instances
+##### Share entity instances (CUBA 6 Screens)
 
-The way to send context-based messages is to use the `@Shareable` annotation. The annotation is used in any Entity browse / editor screen.
+The way to send context-based messages is to use the `@Shareable` annotation for CUBA 6 based screens (AbstractLookup / AbstractEditor).
+The annotation is used in any Entity browse / editor screen.
 
 Example:
 
@@ -106,6 +104,41 @@ The `@Shareable` annotations can be customized through the following attributes:
 
 
 more information on this topic can be found here: [balvi/declarative-controllers](https://github.com/balvi/cuba-component-declarative-controllers)
+
+
+##### Share entity instances (CUBA 7 Screens)
+
+The way to send context-based messages is to use the `WithEntitySharingSupport` interface.
+The interface can be used in any Entity browse screen. It requires to specify the table component as well as the buttonsPanel of the table.
+
+
+Example:
+
+```
+import de.diedavids.cuba.userinbox.web.WithEntitySharingSupport
+
+public class CustomerBrowse extends StandardLookup<Customer> implements WithEntitySharingSupport {
+
+    @Inject
+    protected GroupTable<Customer> customersTable;
+
+
+    @Inject
+    protected ButtonsPanel buttonsPanel;
+
+    @Override
+    public Table getListComponent() {
+        return customersTable;
+    }
+
+    @Override
+    public ButtonsPanel getButtonsPanel() {
+        return buttonsPanel;
+    }
+}
+```
+
+This interface will create a button in the buttonsPanel of the table and add the share button after the default CUBA buttons.
 
 ### Send system messages (programmatically)
 

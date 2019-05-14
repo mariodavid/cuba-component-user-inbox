@@ -1,7 +1,6 @@
 rootProject.name = 'cuba-component-user-inbox'
 def modulePrefix = 'user-inbox'
-include(":${modulePrefix}-global" , ":${modulePrefix}-core" , ":${modulePrefix}-gui" , ":${modulePrefix}-web" )
+include(":${modulePrefix}-global" , ":${modulePrefix}-core" , ":${modulePrefix}-web" )
 project(":${modulePrefix}-global" ).projectDir = new File(settingsDir, 'modules/global')
 project(":${modulePrefix}-core" ).projectDir = new File(settingsDir, 'modules/core')
-project(":${modulePrefix}-gui" ).projectDir = new File(settingsDir, 'modules/gui')
 project(":${modulePrefix}-web" ).projectDir = new File(settingsDir, 'modules/web')

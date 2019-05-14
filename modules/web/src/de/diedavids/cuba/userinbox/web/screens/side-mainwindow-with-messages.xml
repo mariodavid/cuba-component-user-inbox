@@ -3,7 +3,7 @@
         caption="mainMsg://application.caption"
         class="de.diedavids.cuba.userinbox.web.screens.SideMainwindowWithMessages"
         messagesPack="de.diedavids.cuba.userinbox.web.screens"
-        xmlns:main="http://schemas.haulmont.com/cuba/mainwindow.xsd">
+        xmlns:main="http://schemas.haulmont.com/cuba/screen/window.xsd">
     <timers>
         <timer id="updateCountersTimer" delay="3000"  autostart="true" repeating="true" onTimer="updateCounters"/>
     </timers>
@@ -27,10 +27,11 @@
                            align="MIDDLE_CENTER"
                            value="mainMsg://application.logoLabel"/>
                 </hbox>
-                <embedded id="logoImage"
+                <image id="logoImage"
+                       scaleMode="FILL"
                           align="MIDDLE_CENTER"
                           stylename="c-app-icon"
-                          type="IMAGE"/>
+                          />
                 <hbox id="userInfoBox"
                       align="MIDDLE_CENTER"
                       expand="userIndicator"

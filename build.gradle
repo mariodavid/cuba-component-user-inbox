@@ -1,7 +1,9 @@
 
 buildscript {
-    ext.cubaVersion = '6.10.8'
+    ext.cubaVersion = '7.0.5'
     repositories {
+
+        mavenLocal()
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
             credentials {
@@ -10,12 +12,6 @@ buildscript {
             }
         }
 
-        maven {
-            url  "https://dl.bintray.com/balvi/cuba-components"
-        }
-        maven {
-            url  "https://dl.bintray.com/mariodavid/cuba-components"
-        }
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -28,30 +24,28 @@ buildscript {
 }
 
 
+plugins {
+    id 'net.researchgate.release' version '2.6.0'
+}
+
 apply plugin: "com.github.kt3k.coveralls"
 
 def modulePrefix = 'user-inbox'
 
 def globalModule = project(":${modulePrefix}-global" )
 def coreModule = project(":${modulePrefix}-core" )
-def guiModule = project(":${modulePrefix}-gui" )
 def webModule = project(":${modulePrefix}-web" )
 
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
 
-apply(plugin: 'idea')
 apply(plugin: 'cuba')
-
-
-def bintrayRepositoryUrl = "https://api.bintray.com/maven/mariodavid/cuba-components/cuba-component-user-inbox/;publish=1"
-
 
 cuba {
     artifact {
         group = 'de.diedavids.cuba.userinbox'
-        version = '0.5.0'
-        isSnapshot = false
+        version = project.properties['version'].replaceAll('-SNAPSHOT', '')
+        isSnapshot = project.properties['version'].contains('-SNAPSHOT')
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
@@ -79,7 +73,7 @@ subprojects {
         pkg {
             repo = 'cuba-components'
             name = 'cuba-component-user-inbox'
-            desc = 'CUBA component that gives users a mailbox for user2user and system2user messages'
+            desc = 'CUBA platform application component that gives users a mailbox for user2user and system2user messages'
             userOrg = 'mariodavid'
 
             websiteUrl = 'https://github.com/mariodavid/cuba-component-user-inbox'
@@ -95,22 +89,21 @@ subprojects {
             version {
                 name = "${cuba.artifact.version}"
                 desc = ''
-                released  = new Date()
+                released = new Date()
                 vcsTag = "${cuba.artifact.version}"
             }
         }
     }
 }
 
-
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.4.0")
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.7.0")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.8.0")
+    appComponent("de.diedavids.cuba.entitysoftreference:entity-soft-reference-global:0.5.0")
 
 }
 
-def hsql = 'org.hsqldb:hsqldb:2.2.9'
+def hsql = 'org.hsqldb:hsqldb:2.4.1'
 
 
 allprojects {
@@ -143,19 +136,17 @@ test.finalizedBy(project.tasks.cobertura)
 test.finalizedBy(project.tasks.coberturaCheck)
 
 
-
-
-configure([globalModule, coreModule, guiModule, webModule]) {
+configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
-    apply(plugin: 'idea')
     apply(plugin: 'cuba')
 
     dependencies {
+
         testCompile('junit:junit:4.12')
+        testCompile 'org.assertj:assertj-core:2.9.0'
 
-
-        testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
+        testCompile('org.spockframework:spock-core:1.2-groovy-2.5')
         testCompile('org.springframework:spring-test:4.3.1.RELEASE')
         testRuntime "cglib:cglib-nodep:3.2.4"
     }
@@ -170,17 +161,16 @@ configure([globalModule, coreModule, guiModule, webModule]) {
     }
 }
 
-configure([globalModule, coreModule, guiModule, webModule]) {
+configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'groovy')
-
     apply plugin: 'net.saliman.cobertura'
     apply plugin: 'codenarc'
 
     codenarc {
-        toolVersion = "0.24"
+        toolVersion = "1.3"
         ignoreFailures = false
         reportFormat = 'html'
-        reportsDir = new File("./build/reports/codenarc")
+        reportsDir = project.file("build/reports/codenarc")
     }
 
     codenarcMain {
@@ -198,23 +188,38 @@ configure([globalModule, coreModule, guiModule, webModule]) {
         coverageReportDir = new File("$buildDir/reports/cobertura")
 
         coverageExcludes = [
-                '.*Generator',
                 '.*Enum',
-                '.*Hilfe.*' // Hilfe wird vorerst deaktiviert, da die Hilfe noch einem großen Refactoring unterliegt und dies bisher nur ein Proof of Concept ist
         ]
     }
 
     test.finalizedBy(project.tasks.cobertura)
     test.finalizedBy(project.tasks.coberturaCheck)
+
     sourceSets {
         main { groovy { srcDirs = ["src"] } }
         test { groovy { srcDirs = ["test"] } }
     }
+
+    sourceSets.main.output.classesDir = new File(project.buildDir, "classes/main")
+    sourceSets.test.output.classesDir = new File(project.buildDir, "classes/test")
+
 }
 
 configure(globalModule) {
+    dependencies {
+        if (!JavaVersion.current().isJava8()) {
+            runtime('javax.xml.bind:jaxb-api:2.3.1')
+            runtime('org.glassfish.jaxb:jaxb-runtime:2.3.1')
+        }
+    }
     entitiesEnhancing {
-        main { enabled = true }
+        main {
+            enabled = true
+        }
+         test {
+            enabled = true
+            //persistenceConfig = 'userinbox-test-persistence.xml'
+        }
     }
 
     jar {
@@ -223,11 +228,18 @@ configure(globalModule) {
             attributes('App-Component-Version': cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : ''))
         }
     }
-
-    
 }
 
 configure(coreModule) {
+
+    entitiesEnhancing {
+        main { enabled = true }
+        test {
+            enabled = true
+            //persistenceConfig = 'userinbox-test-persistence.xml'
+        }
+
+    }
 
     configurations {
         jdbc
@@ -236,15 +248,14 @@ configure(coreModule) {
 
     dependencies {
         compile(globalModule)
-        provided(servletApi)
+        compileOnly(servletApi)
         jdbc(hsql)
         testRuntime(hsql)
-
     }
 
     task cleanConf(description: 'Cleans up conf directory') {
         doLast {
-            def dir = new File(cuba.tomcat.dir, "/conf/${modulePrefix}-core" )
+            def dir = new File(cuba.tomcat.dir, "/conf/${modulePrefix}-core")
             if (dir.isDirectory()) {
                 ant.delete(includeemptydirs: true) {
                     fileset(dir: dir, includes: '**/*', excludes: 'local.app.properties')
@@ -275,30 +286,16 @@ configure(coreModule) {
     }
 }
 
-configure(guiModule) {
-    dependencies {
-        compile(globalModule)
-
-    }
-
-    task deployConf(type: Copy) {
-        from file('src')
-        include "de/diedavids/cuba/userinbox/**"
-        into "$cuba.tomcat.dir/conf/${modulePrefix}"
-    }
-}
-
 configure(webModule) {
     configurations {
         webcontent
     }
 
     dependencies {
-        provided(servletApi)
-        compile(guiModule)
-
+        compileOnly(servletApi)
+        compile(globalModule)
     }
-    
+
     task webArchive(type: Zip) {
         from file("$buildDir/web")
         from file('web')
@@ -322,7 +319,7 @@ configure(webModule) {
 
     task cleanConf(description: 'Cleans up conf directory') {
         doLast {
-            def dir = new File(cuba.tomcat.dir, "/conf/${modulePrefix}" )
+            def dir = new File(cuba.tomcat.dir, "/conf/${modulePrefix}")
             if (dir.isDirectory()) {
                 ant.delete(includeemptydirs: true) {
                     fileset(dir: dir, includes: '**/*', excludes: 'local.app.properties')
@@ -333,7 +330,7 @@ configure(webModule) {
 
     task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
         appName = "${modulePrefix}"
-        appJars(modulePrefix + '-global', modulePrefix + '-gui', modulePrefix + '-web')
+        appJars(modulePrefix + '-global', modulePrefix + '-web')
     }
 }
 
@@ -341,13 +338,13 @@ configure(webModule) {
 
 
 
-task undeploy(type: Delete, dependsOn: ":${modulePrefix}-web:cleanConf" ) {
+task undeploy(type: Delete, dependsOn: ":${modulePrefix}-web:cleanConf") {
     delete("$cuba.tomcat.dir/shared")
-    delete("$cuba.tomcat.dir/webapps/${modulePrefix}-core" )
-    delete("$cuba.tomcat.dir/webapps/${modulePrefix}" )
+    delete("$cuba.tomcat.dir/webapps/${modulePrefix}-core")
+    delete("$cuba.tomcat.dir/webapps/${modulePrefix}")
 }
 
-task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy" , ":${modulePrefix}-web:deploy" ], description: 'Redeploys applications and restarts local Tomcat') {
+task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefix}-web:deploy"], description: 'Redeploys applications and restarts local Tomcat') {
     doLast {
         ant.waitfor(maxwait: 6, maxwaitunit: 'second', checkevery: 2, checkeveryunit: 'second') {
             not {
@@ -357,13 +354,6 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy" , ":${modulePref
         start.execute()
     }
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.3.1'
-}
-
-apply from: 'extra.gradle'
-
 
 
 clean {

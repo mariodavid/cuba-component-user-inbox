@@ -26,6 +26,7 @@
         </fieldGroup>
         <richTextArea id="messageTextTextArea"
                       datasource="messageDs"
+
                       editable="false"
                       property="text"
                       width="100%"/>
