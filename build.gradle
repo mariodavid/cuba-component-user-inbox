@@ -1,11 +1,10 @@
-
 buildscript {
     ext.cubaVersion = '7.1.0'
     repositories {
 
         mavenLocal()
         maven {
-            url  "https://dl.bintray.com/mariodavid/cuba-components"
+            url "https://dl.bintray.com/mariodavid/cuba-components"
         }
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
@@ -35,9 +34,9 @@ apply plugin: "com.github.kt3k.coveralls"
 
 def modulePrefix = 'user-inbox'
 
-def globalModule = project(":${modulePrefix}-global" )
-def coreModule = project(":${modulePrefix}-core" )
-def webModule = project(":${modulePrefix}-web" )
+def globalModule = project(":${modulePrefix}-global")
+def coreModule = project(":${modulePrefix}-core")
+def webModule = project(":${modulePrefix}-web")
 
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
@@ -115,11 +114,11 @@ allprojects {
 
 
 def files = subprojects
-        .findAll{ !it.name.toLowerCase().contains('theme') }
-        .collect { new File(it.projectDir, '/build/cobertura/cobertura.ser')}
+        .findAll { !it.name.toLowerCase().contains('theme') }
+        .collect { new File(it.projectDir, '/build/cobertura/cobertura.ser') }
 def sourceDirs = subprojects
-        .findAll{ !it.name.toLowerCase().contains('theme') }
-        .collect { new File(it.projectDir, '/src')}
+        .findAll { !it.name.toLowerCase().contains('theme') }
+        .collect { new File(it.projectDir, '/src') }
 
 cobertura {
     coverageFormats = ['html', 'xml']
@@ -134,7 +133,7 @@ cobertura {
 }
 
 
-test.dependsOn(subprojects.collect{ ":${it.name}:test"} )
+test.dependsOn(subprojects.collect { ":${it.name}:test" })
 test.finalizedBy(project.tasks.cobertura)
 test.finalizedBy(project.tasks.coberturaCheck)
 
@@ -219,7 +218,7 @@ configure(globalModule) {
         main {
             enabled = true
         }
-         test {
+        test {
             enabled = true
             //persistenceConfig = 'userinbox-test-persistence.xml'
         }
@@ -336,9 +335,6 @@ configure(webModule) {
         appJars(modulePrefix + '-global', modulePrefix + '-web')
     }
 }
-
-
-
 
 
 task undeploy(type: Delete, dependsOn: ":${modulePrefix}-web:cleanConf") {

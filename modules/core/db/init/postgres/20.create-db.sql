@@ -1,0 +1,6 @@
+-- begin DDCUI_MESSAGE
+alter table DDCUI_MESSAGE add constraint FK_DDCUI_MESSAGE_SENDER foreign key (SENDER_ID) references SEC_USER(ID)^
+alter table DDCUI_MESSAGE add constraint FK_DDCUI_MESSAGE_RECEIVER foreign key (RECEIVER_ID) references SEC_USER(ID)^
+create index IDX_DDCUI_MESSAGE_SENDER on DDCUI_MESSAGE (SENDER_ID)^
+create index IDX_DDCUI_MESSAGE_RECEIVER on DDCUI_MESSAGE (RECEIVER_ID)^
+-- end DDCUI_MESSAGE

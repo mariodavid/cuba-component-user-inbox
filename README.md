@@ -11,7 +11,7 @@ This CUBA component gives users a mailbox for user to user and system to user me
 
 ## Installation
 
-1. `user-inbox` is available in the [CUBA marketplace](https://www.cuba-platform.com/marketplace)
+1. `user-inbox` is available in the [CUBA marketplace](https://www.cuba-platform.com/marketplace/user-inbox/)
 2. Select a version of the add-on which is compatible with the platform version used in your project:
 
 | Platform Version | Add-on Version |
@@ -35,6 +35,28 @@ dependencies {
   appComponent("de.diedavids.cuba.userinbox:user-inbox-global:*addon-version*")
 }
 ```
+
+
+### CHANGELOG
+
+Information on changes that happen through the different versions of the application component can be found in the [CHANGELOG](CHANGELOG.md).
+The Changelog also contains information about breaking changes and tips on how to resolve them.
+
+
+## Supported DBMS
+
+The following databases are supported by this application component:
+
+* HSQLDB
+* PostgreSQL
+* MySQL
+
+All other DBMS systems are also possible to work with by the fact that CUBA studio generates the corresponding 
+init / update scripts within the application.
+
+### Example usage
+
+To see this application component in action, check out this example: [cuba-example-using-user-inbox](https://github.com/mariodavid/cuba-example-using-user-inbox).
 
 ## Using the Inbox as a User
 
