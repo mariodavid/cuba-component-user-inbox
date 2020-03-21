@@ -7,13 +7,16 @@
 This CUBA component gives users a mailbox for user to user and system to user messages
 
 
+![send message manually](/img/1-send-message-manually-overview.gif)
+
 ## Installation
 
-1. `user-inbox` is available in the [CUBA marketplace](https://www.cuba-platform.com/marketplace)
+1. `user-inbox` is available in the [CUBA marketplace](https://www.cuba-platform.com/marketplace/user-inbox/)
 2. Select a version of the add-on which is compatible with the platform version used in your project:
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
+| 7.1.x            | 0.7.x          |
 | 7.0.x            | 0.6.x          |
 | 6.10.x           | 0.5.x          |
 | 6.9.x            | 0.4.x          |
@@ -33,25 +36,35 @@ dependencies {
 }
 ```
 
-### NOTE: Dependency: declarative-controllers
-This application component requires `declarative-controllers` as another dependency you have to add to your application.
 
-The reason is, that you need to extend your screen from `AnnotatableAbstractLookup` instead of `AbstractLookup`.
-This superclass is part of the app-component: [cuba-component-declarative-controllers](https://github.com/balvi/cuba-component-declarative-controllers).
+### CHANGELOG
 
-Technically it is not strictly required to directly add the dependency to `declarative-controllers`, since `user-inbox` already has a dependency on it.
+Information on changes that happen through the different versions of the application component can be found in the [CHANGELOG](CHANGELOG.md).
+The Changelog also contains information about breaking changes and tips on how to resolve them.
 
-However: since you directly depend on the app component (with extending your classes from `AnnotatableAbstractLookup`), 
-it is a best practice to explicitly declare the dependency to it.
 
-## Using the inbox as a user
+## Supported DBMS
+
+The following databases are supported by this application component:
+
+* HSQLDB
+* PostgreSQL
+* MySQL
+
+All other DBMS systems are also possible to work with by the fact that CUBA studio generates the corresponding 
+init / update scripts within the application.
+
+## Example Usage
+
+To see this application component in action, check out this example: [cuba-example-using-user-inbox](https://github.com/mariodavid/cuba-example-using-user-inbox).
+
+## Using the Inbox as a User
 
 As a logged in user you'll see a menu entry called "Messages" which will show the incoming messages that are either
 from another user of the system or from the system itself, which has send a message
 to the system in order to notify the user about something changed in the system.
 
-![Screenshot overview of incoming messages](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/img/messages-overview.png)
-
+![user inbox](/img/4-user-inbox.png)
 
 ## Sending messages
 
@@ -67,8 +80,7 @@ In order to send a message to a particular user, there is a button "Send message
 
 This screen allows to manually send a message. A message contains a subject and a body, just like a regular Email.
 
-![Screenshot of sending a new message](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/img/send-message.png)
-
+![send message manually](/img/1-send-message-manually-editor.png)
 
 This feature can sometimes be helpful but oftentimes sending a regular email is not worse.
 
@@ -77,6 +89,9 @@ This feature can sometimes be helpful but oftentimes sending a regular email is 
 Therefore there is another option to send a Message. In this case it is a message that is send through the context of a particular entity.
 
 This is comparable of sending a email with a link that points to a particular customer / order etc. in your application together with the information from the sender.
+
+![share entities overview](/img/3-share-entities-overview.gif)
+
 
 ##### Share entity instances (CUBA 6 Screens)
 
@@ -143,7 +158,7 @@ This interface will create a button in the buttonsPanel of the table and add the
 ### Send system messages (programmatically)
 
 The other way to send a message to a user is that the developer defines points in the application, where it is useful to notify some user
-about a particular thing happend. This can be various actions, like:
+about a particular thing happened. This can be various actions, like:
 
 * a new Customer has been created
 * an order was placed with a total amount > 10k
@@ -152,8 +167,8 @@ about a particular thing happend. This can be various actions, like:
 
 There are lot of things that might happen in the lifecycle of an application that are worth to notify.
 
-To send a message to user programmatically, there is a [MessageService]() which will allow exactly this. The interface of this service
-looks liks this:
+To send a message to user programmatically, there is a [MessageService](https://github.com/mariodavid/cuba-component-user-inbox/blob/master/modules/global/src/de/diedavids/cuba/userinbox/service/MessageService.java) which will allow exactly this. The interface of this service
+looks like this:
 
 ````
 public interface MessageService {
@@ -168,7 +183,10 @@ public interface MessageService {
 `sendSystemMessage` will add a message in the given receivers inbox with a subject, a text and an optional entity reference.
 
 
-## Using predefined main window screens
+![programmatic notification sending](/img/5-programmatic-notification-sending-overview.gif)
+
+
+## Using pre-defined Main Window Screens
 
 This application component comes with two options for the main screens, that can be used in the final application.
  
@@ -190,7 +208,7 @@ One of these two classes can be used as the mainwinow through the following defi
 
 You can also extend this screens, so that you can add your own (screen-) logic to the mainwindow.
  
-##### unread messages counter in predefined main windows screens
+##### Unread Messages Counter in pre-defined Main Window Screens
 
 In order to display the messages that are marked as unread, the main windows will be refreshed in a particular interval.
 The logic is the same as the Count script which is available within the [Application Folders](https://doc.cuba-platform.com/manual-6.8/application_folder.html)
