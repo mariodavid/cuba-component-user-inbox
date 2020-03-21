@@ -54,7 +54,7 @@ The following databases are supported by this application component:
 All other DBMS systems are also possible to work with by the fact that CUBA studio generates the corresponding 
 init / update scripts within the application.
 
-### Example usage
+## Example Usage
 
 To see this application component in action, check out this example: [cuba-example-using-user-inbox](https://github.com/mariodavid/cuba-example-using-user-inbox).
 
