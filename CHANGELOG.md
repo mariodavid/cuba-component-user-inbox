@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - ability to send message to multiple receivers
 
 ### Changed
-- Refactored all Screens to CUBA 7 APIs
+- Refactored all Screens to CUBA 7 APIs (in case you extended the previously existing screens, make sure you catch up with the new implementation)
+- (Breaking!) `MessageService.countUnreadMessagesForCurrentUser()` returns long instead of int
 
 ### Dependencies
 - CUBA 7.2.x
