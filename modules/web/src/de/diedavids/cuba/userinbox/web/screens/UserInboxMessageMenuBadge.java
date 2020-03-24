@@ -8,14 +8,15 @@ import com.haulmont.cuba.gui.screen.FrameOwner;
 import com.haulmont.cuba.gui.screen.OpenMode;
 import com.haulmont.cuba.web.WebConfig;
 import de.diedavids.cuba.userinbox.service.MessageService;
+import de.diedavids.cuba.userinbox.web.message.UserInbox;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
-@Component(UserInboxMessageBadgeInitializer.NAME)
-public class UserInboxMessageBadgeInitializer {
+@Component(UserInboxMessageMenuBadge.NAME)
+public class UserInboxMessageMenuBadge {
 
-    static final String NAME = "ddcui_UserInboxMessageBadgeInitializer";
+    static final String NAME = "ddcui_UserInboxMessageMenuBadge";
 
     @Inject
     protected Messages messages;
@@ -35,7 +36,7 @@ public class UserInboxMessageBadgeInitializer {
         messagesMenuItem.setCommand(menuItem ->
                 screenBuilders.screen(frameOwner)
                         .withLaunchMode(OpenMode.NEW_TAB)
-                        .withScreenId("user-inbox")
+                        .withScreenClass(UserInbox.class)
                         .show()
         );
 
@@ -58,7 +59,7 @@ public class UserInboxMessageBadgeInitializer {
                 );
     }
 
-    private int getMessageCounter() {
+    private long getMessageCounter() {
         return messageService.countUnreadMessagesForCurrentUser();
     }
 

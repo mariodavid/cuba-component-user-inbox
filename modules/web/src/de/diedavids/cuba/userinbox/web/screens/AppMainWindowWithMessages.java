@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class AppMainWindowWithMessages extends AppMainWindow {
 
-
     @Inject
     private Action openMessagesAction;
 
@@ -26,7 +25,7 @@ public class AppMainWindowWithMessages extends AppMainWindow {
     private WebConfig webConfig;
 
     public void openMessages() {
-        openWindow("user-inbox", WindowManager.OpenType.DIALOG);
+        openWindow("ddcui$user-inbox", WindowManager.OpenType.DIALOG);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class AppMainWindowWithMessages extends AppMainWindow {
     }
 
     private void updateMessageCounter() {
-        int messageCounter = getMessageCounter();
+        long messageCounter = getMessageCounter();
         String messageCounterCaption = "";
 
         if (messageCounter > 0) {
@@ -59,7 +58,7 @@ public class AppMainWindowWithMessages extends AppMainWindow {
         openMessagesAction.setCaption(messageCounterCaption);
     }
 
-    private int getMessageCounter() {
+    private long getMessageCounter() {
         return messageService.countUnreadMessagesForCurrentUser();
     }
 }

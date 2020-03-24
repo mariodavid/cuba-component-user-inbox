@@ -6,7 +6,7 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 import com.haulmont.cuba.web.app.main.MainScreen;
-import de.diedavids.cuba.userinbox.web.screens.UserInboxMessageBadgeInitializer;
+import de.diedavids.cuba.userinbox.web.screens.UserInboxMessageMenuBadge;
 
 import javax.inject.Inject;
 
@@ -21,11 +21,11 @@ public class UserInboxSideMenuMainScreen extends MainScreen {
     protected Timer updateCountersTimer;
 
     @Inject
-    protected UserInboxMessageBadgeInitializer userInboxMessageBadgeInitializer;
+    protected UserInboxMessageMenuBadge userInboxMessageMenuBadge;
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        userInboxMessageBadgeInitializer.initMessagesMenuItem(
+        userInboxMessageMenuBadge.initMessagesMenuItem(
                 sideMenu,
                 updateCountersTimer,
                 this
@@ -34,12 +34,12 @@ public class UserInboxSideMenuMainScreen extends MainScreen {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        userInboxMessageBadgeInitializer.updateMessageCounter(sideMenu);
+        userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
     }
 
     @Subscribe("updateCountersTimer")
     protected void onUpdateCountersTimerTimerAction(Timer.TimerActionEvent event) {
-        userInboxMessageBadgeInitializer.updateMessageCounter(sideMenu);
+        userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
     }
 
 }

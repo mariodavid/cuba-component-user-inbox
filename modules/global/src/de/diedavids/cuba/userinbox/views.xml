@@ -8,4 +8,12 @@
         <property name="receiver"
                   view="_minimal"/>
     </view>
+    <view class="de.diedavids.cuba.userinbox.entity.SendMessageEntity"
+          extends="_local"
+          name="send-message-entity-with-users-view">
+        <property name="sender"
+                  view="_minimal"/>
+        <property name="receivers"
+                  view="_minimal"/>
+    </view>
 </views>

@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://browseCaption"
-        class="de.diedavids.cuba.userinbox.web.message.UserInbox"
         focusComponent="messagesTable"
-        lookupComponent="messagesTable"
         messagesPack="de.diedavids.cuba.userinbox.web.message">
-    <dsContext>
-        <groupDatasource id="messagesDs"
-                         class="de.diedavids.cuba.userinbox.entity.Message"
-                         view="message-with-users-view">
-            <query>
-                <![CDATA[select e from ddcui$Message e where e.receiver.id = :session$userId order by e.receivedAt desc]]>
-            </query>
-        </groupDatasource>
-    </dsContext>
+    <data>
+        <collection id="messagesDc"
+                    class="de.diedavids.cuba.userinbox.entity.Message"
+                    view="message-with-users-view">
+            <loader id="messagesDl">
+                <query>
+                    <![CDATA[select e from ddcui$Message e where e.receiver = :receiver]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="messagesTable"
             spacing="true">
         <filter id="filter"
                 applyTo="messagesTable"
-                datasource="messagesDs">
+                dataLoader="messagesDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="messagesTable"
-                    multiselect="true"
-                    width="100%">
+        <table id="messagesTable"
+               width="100%"
+               dataContainer="messagesDc">
             <actions>
                 <action id="create"
-                        caption="msg://newMessage"/>
-                <action id="edit" caption="mainMsg://actions.View" icon="font-icon:SEARCH"/>
-                <action id="remove"/>
+                        type="create"
+                        caption="msg://newMessage">
+                    <properties>
+                        <property name="screenClass" value="de.diedavids.cuba.userinbox.web.message.SendMessage"/>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="edit" type="edit" caption="mainMsg://actions.View" icon="font-icon:SEARCH">
+                    <properties>
+                        <property name="screenClass" value="de.diedavids.cuba.userinbox.web.message.MessageDetails"/>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="remove" type="remove"/>
                 <action id="toggleRead"
-                        invoke="toggleRead"
                         caption="msg://markAsRead"
                         icon="font-icon:CHECK_SQUARE_O"
                         trackSelection="true"
@@ -43,21 +53,20 @@
                 <column id="subject"/>
                 <column id="shareable" link="true" sortable="false"/>
                 <column id="read"/>
-                <column id="receivedAt"/>
+                <column id="receivedAt" sort="DESCENDING"/>
             </columns>
-            <rows datasource="messagesDs"/>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn"
-                        action="messagesTable.create"/>
-                <button id="editBtn"
-                        action="messagesTable.edit"/>
-                <button id="removeBtn"
-                        action="messagesTable.remove"/>
-                <button id="toggleReadBtn"
-                        action="messagesTable.toggleRead"/>
+                <button id="createBtn" action="messagesTable.create"/>
+                <button id="editBtn" action="messagesTable.edit"/>
+                <button id="removeBtn" action="messagesTable.remove"/>
+                <button id="toggleReadBtn" action="messagesTable.toggleRead"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
     </layout>
 </window>

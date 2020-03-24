@@ -3,6 +3,7 @@ package de.diedavids.cuba.userinbox.service;
 
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.security.entity.User;
+import de.diedavids.cuba.userinbox.entity.SendMessageEntity;
 
 public interface MessageService {
     String NAME = "ddcui_MessageService";
@@ -14,5 +15,7 @@ public interface MessageService {
     void sendMessage(User receiver, String subject, String messageText);
 
 
-    int countUnreadMessagesForCurrentUser();
+    long countUnreadMessagesForCurrentUser();
+
+    void sendMessage(SendMessageEntity sendMessageEntity);
 }
