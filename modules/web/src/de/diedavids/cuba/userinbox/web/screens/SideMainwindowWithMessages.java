@@ -39,30 +39,12 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
         initLayoutAnalyzerContextMenu(logoImage);
         initLogoImage(logoImage);
         initFtsField(ftsField);
-//
-//        initUpdateCounterTimerDelay();
-//        initMessagesMenuItem();
+
         userInboxMessageMenuBadge
                 .initMessagesMenuItem(sideMenu, updateCountersTimer, this);
 
         sideMenu.setSelectOnClick(true);
     }
-
-//
-//    private void initUpdateCounterTimerDelay() {
-//        int period = webConfig.getAppFoldersRefreshPeriodSec() * 1000;
-//        updateCountersTimer.setDelay(period);
-//    }
-//
-//
-//    private void initMessagesMenuItem() {
-//        SideMenu.MenuItem messagesMenuItem = sideMenu.createMenuItem("messages");
-//        messagesMenuItem.setCaption(messages.getMessage(this.getClass(), "messages"));
-//        messagesMenuItem.setIcon("font-icon:ENVELOPE");
-//        messagesMenuItem.setCommand(menuItem -> openWindow("user-inbox", WindowManager.OpenType.NEW_TAB));
-//
-//        sideMenu.addMenuItem(messagesMenuItem,0);
-//    }
 
     @Override
     public void ready() {
@@ -73,12 +55,4 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
         userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
     }
 
-//    private void updateMessageCounter() {
-//        sideMenu.getMenuItemNN("messages")
-//                .setBadgeText(getMessageCounter() + " new");
-//    }
-//
-//    private long getMessageCounter() {
-//        return messageService.countUnreadMessagesForCurrentUser();
-//    }
 }

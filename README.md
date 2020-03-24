@@ -16,6 +16,7 @@ This CUBA component gives users a mailbox for user to user and system to user me
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
+| 7.2.x            | 0.8.x          |
 | 7.1.x            | 0.7.x          |
 | 7.0.x            | 0.6.x          |
 | 6.10.x           | 0.5.x          |
@@ -82,8 +83,6 @@ This screen allows to manually send a message. A message contains a subject and 
 
 ![send message manually](/img/1-send-message-manually-editor.png)
 
-This feature can sometimes be helpful but oftentimes sending a regular email is not worse.
-
 #### Context-based messages
 
 Therefore there is another option to send a Message. In this case it is a message that is send through the context of a particular entity.
@@ -91,7 +90,6 @@ Therefore there is another option to send a Message. In this case it is a messag
 This is comparable of sending a email with a link that points to a particular customer / order etc. in your application together with the information from the sender.
 
 ![share entities overview](/img/3-share-entities-overview.gif)
-
 
 ##### Share entity instances (CUBA 6 Screens)
 
