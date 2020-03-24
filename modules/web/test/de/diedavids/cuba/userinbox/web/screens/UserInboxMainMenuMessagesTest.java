@@ -60,7 +60,7 @@ public class UserInboxMainMenuMessagesTest {
 
     //given:
     when(messageService.countUnreadMessagesForCurrentUser())
-            .thenReturn(3);
+            .thenReturn(3L);
 
     // when:
     SideMenu sideMenu = showSideMenuRootScreen();
