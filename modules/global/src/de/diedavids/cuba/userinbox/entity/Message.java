@@ -130,4 +130,8 @@ public class Message extends StandardEntity {
     private UserSessionSource getUserSessionSource() {
         return AppBeans.get(UserSessionSource.class);
     }
+
+    public void toggleRead() {
+        setRead(!getRead());
+    }
 }

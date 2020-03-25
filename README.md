@@ -16,6 +16,7 @@ This CUBA component gives users a mailbox for user to user and system to user me
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
+| 7.2.x            | 0.8.x          |
 | 7.1.x            | 0.7.x          |
 | 7.0.x            | 0.6.x          |
 | 6.10.x           | 0.5.x          |
@@ -66,7 +67,7 @@ to the system in order to notify the user about something changed in the system.
 
 ![user inbox](/img/4-user-inbox.png)
 
-## Sending messages
+## Sending Messages
 
 To send messages to a particular user, there are two options available:
 
@@ -74,7 +75,7 @@ To send messages to a particular user, there are two options available:
 * system messages that are send programmatically
 
 
-### Send manual messages
+### Send Manual Messages
 
 In order to send a message to a particular user, there is a button "Send message" in the users inbox.
 
@@ -82,9 +83,7 @@ This screen allows to manually send a message. A message contains a subject and 
 
 ![send message manually](/img/1-send-message-manually-editor.png)
 
-This feature can sometimes be helpful but oftentimes sending a regular email is not worse.
-
-#### Context-based messages
+#### Context-based Messages
 
 Therefore there is another option to send a Message. In this case it is a message that is send through the context of a particular entity.
 
@@ -92,8 +91,7 @@ This is comparable of sending a email with a link that points to a particular cu
 
 ![share entities overview](/img/3-share-entities-overview.gif)
 
-
-##### Share entity instances (CUBA 6 Screens)
+##### Share Entity Instances (CUBA 6 Screens)
 
 The way to send context-based messages is to use the `@Shareable` annotation for CUBA 6 based screens (AbstractLookup / AbstractEditor).
 The annotation is used in any Entity browse / editor screen.
@@ -155,7 +153,7 @@ public class CustomerBrowse extends StandardLookup<Customer> implements WithEnti
 
 This interface will create a button in the buttonsPanel of the table and add the share button after the default CUBA buttons.
 
-### Send system messages (programmatically)
+### Send System Messages (programmatically)
 
 The other way to send a message to a user is that the developer defines points in the application, where it is useful to notify some user
 about a particular thing happened. This can be various actions, like:
@@ -188,27 +186,58 @@ public interface MessageService {
 
 ## Using pre-defined Main Window Screens
 
-This application component comes with two options for the main screens, that can be used in the final application.
- 
-* SideMainwindowWithMessages (side-mainwindow-with-messages.xml)
-* AppMainWindowWithMessages (mainwindow-with-messages.xml)
+This application component comes with multiple options for the main screens, that can be used in the final application.
 
-One of these two classes can be used as the mainwinow through the following definition in your web-screens.xml:
+* UserInboxSideMenuMainScreen (`userInboxSideMenuMainScreen`) (CUBA 7 based Side Menu)
+* SideMainwindowWithMessages (`sideMainWindowWithMessages`) (CUBA 6 based Side Menu)
+* AppMainWindowWithMessages (`appMainWindowWithMessages`) (CUBA 6 based Main Menu)
+
+One of these classes can be used as the main screen via `web-app.properties`:
 
 ````    
-<!-- either the normal mainwindow with messages badge -->
-<screen id="mainWindow"
-        template="de/diedavids/cuba/userinbox/web/screens/mainwindow-with-messages.xml"/>
-
-<!-- or the side menu main window with messages badge -->
-<screen id="mainWindow"
-        template="de/diedavids/cuba/userinbox/web/screens/side-mainwindow-with-messages.xml"/>
-
+cuba.web.mainScreenId=appMainWindowWithMessages
 ````
 
-You can also extend this screens, so that you can add your own (screen-) logic to the mainwindow.
- 
-##### Unread Messages Counter in pre-defined Main Window Screens
+### Custom Main Screen
+
+In case you are using a custom main screen, the following logic has to be implemented to leverage the menu entry and
+the automatic reload of the new messages:
+
+```java
+import de.diedavids.cuba.userinbox.web.screens.UserInboxMessageMenuBadge;
+
+public class CustomApplicationMainScreen extends MainScreen {
+
+    @Inject
+    protected SideMenu sideMenu;
+    @Inject
+    protected Timer updateCountersTimer;
+
+    @Inject
+    protected UserInboxMessageMenuBadge userInboxMessageMenuBadge;
+
+    @Subscribe
+    protected void onInit(InitEvent event) {
+        userInboxMessageMenuBadge.initMessagesMenuItem(
+                sideMenu,
+                updateCountersTimer,
+                this
+        );
+    }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
+    }
+
+    @Subscribe("updateCountersTimer")
+    protected void onUpdateCountersTimerTimerAction(Timer.TimerActionEvent event) {
+        userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
+    }
+}
+```
+
+### Unread Messages Counter in pre-defined Main Window Screens
 
 In order to display the messages that are marked as unread, the main windows will be refreshed in a particular interval.
 The logic is the same as the Count script which is available within the [Application Folders](https://doc.cuba-platform.com/manual-6.8/application_folder.html)

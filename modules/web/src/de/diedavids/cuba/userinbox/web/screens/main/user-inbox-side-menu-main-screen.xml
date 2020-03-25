@@ -1,0 +1,14 @@
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        extends="/com/haulmont/cuba/web/app/main/main-screen.xml">
+    <facets>
+        <timer id="updateCountersTimer" delay="3000"  autostart="true" repeating="true" />
+    </facets>
+    <layout>
+        <cssLayout id="horizontalWrap">
+            <workArea id="workArea">
+                <initialLayout>
+                </initialLayout>
+            </workArea>
+        </cssLayout>
+    </layout>
+</window>

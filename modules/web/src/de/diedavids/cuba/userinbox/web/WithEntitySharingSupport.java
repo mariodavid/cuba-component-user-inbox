@@ -11,6 +11,7 @@ import com.haulmont.cuba.gui.components.actions.ListAction;
 import com.haulmont.cuba.gui.screen.*;
 import de.balvi.cuba.declarativecontrollers.web.helper.ButtonsPanelHelper;
 import de.diedavids.cuba.userinbox.entity.Message;
+import de.diedavids.cuba.userinbox.entity.SendMessageEntity;
 
 import java.util.Collections;
 
@@ -23,7 +24,7 @@ public interface WithEntitySharingSupport {
     String SHARE_TEXT_KEY = "share.text";
     String SHARE_ACTION_ID = "shareAction";
     String SHARE_BTN_ID = "shareBtn";
-    String SHARE_NEW_MESSAGE_SCREEN_ID = "send-message";
+    String SHARE_NEW_MESSAGE_SCREEN_ID = "ddcui$send-message";
 
     /**
      * defines the table component that will be used as a basis for the tag functionality
@@ -72,7 +73,7 @@ public interface WithEntitySharingSupport {
                 .withPrimary(true)
                 .withIcon(ICON_KEY)
                 .withCaption(messages.getMainMessage(BUTTON_MSG_KEY))
-                .withHandler(e -> screens.editor(Message.class, screen)
+                .withHandler(e -> screens.editor(SendMessageEntity.class, screen)
                         .withScreenId(SHARE_NEW_MESSAGE_SCREEN_ID)
                         .withInitializer(message -> {
                             Entity shareable = getListComponent().getSingleSelected();

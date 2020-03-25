@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
     <include file="de/diedavids/cuba/userinbox/screens.xml"/>
-    <!--
 
-    <screen id="mainWindow"
+    <screen id="appMainWindowWithMessages"
             template="de/diedavids/cuba/userinbox/web/screens/mainwindow-with-messages.xml"/>
 
-    -->
-    <screen id="mainWindow"
+    <screen id="sideMainWindowWithMessages"
             template="de/diedavids/cuba/userinbox/web/screens/side-mainwindow-with-messages.xml"/>
-    <screen id="user-inbox"
-            template="de/diedavids/cuba/userinbox/web/message/user-inbox.xml"/>
-    <screen id="send-message"
-            template="de/diedavids/cuba/userinbox/web/message/send-message.xml"/>
-    <screen id="ddcui$Message.edit"
-            template="de/diedavids/cuba/userinbox/web/message/message-edit.xml"/>
+
 </screen-config>

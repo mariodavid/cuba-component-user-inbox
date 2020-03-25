@@ -5,27 +5,25 @@
         messagesPack="de.diedavids.cuba.userinbox.web.message">
     <data>
         <instance id="messageDc"
-                  class="de.diedavids.cuba.userinbox.entity.SendMessageEntity"
-                  view="_local">
+                  class="de.diedavids.cuba.userinbox.entity.Message"
+                  view="message-with-users-view">
             <loader/>
         </instance>
-        <collection id="receiversDc" class="com.haulmont.cuba.security.entity.User" view="_minimal">
-            <loader id="receiversLc">
-                <query>
-                    <![CDATA[select e from sec$User e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="messageTextTextArea" spacing="true">
         <hbox width="100%" spacing="true">
-            <tokenList dataContainer="messageDc"
-                       property="receivers"
-                       caption="msg://de.diedavids.cuba.userinbox.entity.Message/Message.receiver">
-                <lookup optionsContainer="receiversDc" lookup="true"/>
-            </tokenList>
+            <lookupField
+                    dataContainer="messageDc"
+                    property="sender"
+                    caption="msg://de.diedavids.cuba.userinbox.entity.Message/Message.sender"
+                    editable="false" />
+            <dateField
+                    dataContainer="messageDc"
+                    property="receivedAt"
+                    caption="msg://de.diedavids.cuba.userinbox.entity.Message/Message.receivedAt"
+                    editable="false" />
             <form id="form" width="100%" dataContainer="messageDc" captionPosition="TOP">
                 <field property="shareable" width="100%"/>
             </form>
@@ -34,9 +32,11 @@
                 dataContainer="messageDc"
                 property="subject"
                 caption="msg://de.diedavids.cuba.userinbox.entity.Message/Message.subject"
+                editable="false"
                 width="100%" />
         <richTextArea id="messageTextTextArea"
                       dataContainer="messageDc"
+                      editable="false"
                       caption="msg://de.diedavids.cuba.userinbox.entity.Message/Message"
                       property="text"
                       width="100%"/>

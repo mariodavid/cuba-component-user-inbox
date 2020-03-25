@@ -1,18 +1,18 @@
 package de.diedavids.cuba.userinbox.web.screens;
 
-import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.AbstractMainWindow;
-import com.haulmont.cuba.gui.components.Embedded;
 import com.haulmont.cuba.gui.components.Image;
 import com.haulmont.cuba.gui.components.Timer;
 import com.haulmont.cuba.gui.components.mainwindow.FtsField;
 import com.haulmont.cuba.gui.components.mainwindow.SideMenu;
-import com.haulmont.cuba.web.WebConfig;
-import de.diedavids.cuba.userinbox.service.MessageService;
 
 import javax.inject.Inject;
 import java.util.Map;
 
+
+/**
+ * @deprecated switch to CUBA 7 based Main Screens
+ */
 public class SideMainwindowWithMessages extends AbstractMainWindow {
 
     @Inject
@@ -25,14 +25,10 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
     private SideMenu sideMenu;
 
     @Inject
-    private MessageService messageService;
-
-
-    @Inject
     private Timer updateCountersTimer;
 
     @Inject
-    private WebConfig webConfig;
+    protected UserInboxMessageMenuBadge userInboxMessageMenuBadge;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -44,46 +40,19 @@ public class SideMainwindowWithMessages extends AbstractMainWindow {
         initLogoImage(logoImage);
         initFtsField(ftsField);
 
-        initUpdateCounterTimerDelay();
-        initMessagesMenuItem();
+        userInboxMessageMenuBadge
+                .initMessagesMenuItem(sideMenu, updateCountersTimer, this);
 
         sideMenu.setSelectOnClick(true);
-
-
-
-    }
-
-
-    private void initUpdateCounterTimerDelay() {
-        int period = webConfig.getAppFoldersRefreshPeriodSec() * 1000;
-        updateCountersTimer.setDelay(period);
-    }
-
-
-    private void initMessagesMenuItem() {
-        SideMenu.MenuItem messagesMenuItem = sideMenu.createMenuItem("messages");
-        messagesMenuItem.setCaption(messages.getMessage(this.getClass(), "messages"));
-        messagesMenuItem.setIcon("font-icon:ENVELOPE");
-        messagesMenuItem.setCommand(menuItem -> openWindow("user-inbox", WindowManager.OpenType.NEW_TAB));
-
-        sideMenu.addMenuItem(messagesMenuItem,0);
     }
 
     @Override
     public void ready() {
-        updateMessageCounter();
+        userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
     }
 
     public void updateCounters(Timer source) {
-        updateMessageCounter();
+        userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
     }
 
-    private void updateMessageCounter() {
-        sideMenu.getMenuItemNN("messages")
-                .setBadgeText(getMessageCounter() + " new");
-    }
-
-    private int getMessageCounter() {
-        return messageService.countUnreadMessagesForCurrentUser();
-    }
 }
