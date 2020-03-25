@@ -4,7 +4,7 @@
 
 # CUBA Platform Component - User Inbox
 
-This CUBA component gives users a mailbox for user to user and system to user messages
+This CUBA component gives users a mailbox for user to user and system to user messages. Using this add-on allows you to notify users about certain events that happened within the application. Also it is possible to let users send messages / notification to other users. Using context-based messages, the user can link to particular business objects when sending messages.
 
 
 ![send message manually](/img/1-send-message-manually-overview.gif)
