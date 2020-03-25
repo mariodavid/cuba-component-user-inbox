@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - ability to send message to multiple receivers
+- `MessageService.sendMessage(SendMessageEntity sendMessageEntity)` API to send messages to multiple receivers programmatically
 
 ### Changed
 - Refactored all Screens to CUBA 7 APIs (in case you extended the previously existing screens, make sure you catch up with the new implementation)
