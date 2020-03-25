@@ -8,6 +8,7 @@ import com.haulmont.cuba.gui.WindowManager
 import com.haulmont.cuba.gui.components.Action
 import com.haulmont.cuba.gui.components.Frame
 import de.diedavids.cuba.userinbox.entity.Message
+import de.diedavids.cuba.userinbox.entity.SendMessageEntity
 import groovy.transform.CompileStatic
 import org.springframework.stereotype.Component
 
@@ -47,11 +48,11 @@ class ShareableBean {
 
 
     void openSendMessageEditor(Frame frame, Entity shareable) {
-        frame.openEditor('send-message', createShareMessage(shareable), WindowManager.OpenType.DIALOG)
+        frame.openEditor('ddcui$send-message', createShareMessage(shareable), WindowManager.OpenType.DIALOG)
     }
 
-    private Message createShareMessage(Entity shareable) {
-        def newMessage = metadata.create(Message)
+    private SendMessageEntity createShareMessage(Entity shareable) {
+        def newMessage = metadata.create(SendMessageEntity)
 
         newMessage.shareable = shareable
         newMessage.subject = getShareMessageSubject(shareable)

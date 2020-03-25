@@ -13,7 +13,7 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="messageTextTextArea" spacing="true">
-        <hbox spacing="true">
+        <hbox width="100%" spacing="true">
             <lookupField
                     dataContainer="messageDc"
                     property="sender"
@@ -24,8 +24,8 @@
                     property="receivedAt"
                     caption="msg://de.diedavids.cuba.userinbox.entity.Message/Message.receivedAt"
                     editable="false" />
-            <form id="form" dataContainer="messageDc" captionPosition="TOP">
-                <field property="shareable"/>
+            <form id="form" width="100%" dataContainer="messageDc" captionPosition="TOP">
+                <field property="shareable" width="100%"/>
             </form>
         </hbox>
         <textField
