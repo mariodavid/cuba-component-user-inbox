@@ -15,7 +15,9 @@ import java.util.Date;
 import com.haulmont.cuba.core.entity.Entity;
 
 @Listeners("ddcui_MessageEntityListener")
-@Table(name = "DDCUI_MESSAGE")
+@Table(name = "DDCUI_MESSAGE", indexes = {
+        @Index(name = "IDX_DDCUI_MESSAGE_ON_RECEIVER_ID_READ_", columnList = "RECEIVER_ID, READ_")
+})
 @javax.persistence.Entity(name = "ddcui$Message")
 public class Message extends StandardEntity {
     private static final long serialVersionUID = -631256156050655713L;
