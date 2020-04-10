@@ -200,7 +200,13 @@ cuba.web.mainScreenId=appMainWindowWithMessages
 
 ### Custom Main Screen
 
-In case you are using a custom main screen, the following logic has to be implemented to leverage the menu entry and
+In case you are using a custom main screen, you will need to add a Timer to the descriptor:
+
+```java
+        <timer id="updateCountersTimer" delay="3000"  autostart="true" repeating="true" />
+```
+
+Then, the following logic has to be implemented to leverage the menu entry and
 the automatic reload of the new messages:
 
 ```java
