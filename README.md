@@ -232,7 +232,7 @@ public class CustomApplicationMainScreen extends MainScreen {
     }
 
     @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
+    protected void onAfterInit(AfterInit event) {
         userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
     }
 
