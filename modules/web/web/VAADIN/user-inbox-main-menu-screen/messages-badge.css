@@ -1,0 +1,11 @@
+.messages-item.c-sidemenu-item .c-sidemenu-item-caption .c-sidemenu-item-badge {
+    padding: 2px 5px;
+    top: unset;
+    height: 100%;
+    position: relative;
+    right: -70px;
+}
+.messages-item.new-messages .v-icon,
+.messages-item.new-messages .c-sidemenu-item-thumbnail-icon {
+    color: #7ba8cb;
+}
