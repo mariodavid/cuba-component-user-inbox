@@ -6,6 +6,8 @@ import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.gui.screen.UiController;
 import com.haulmont.cuba.gui.screen.UiDescriptor;
 import com.haulmont.cuba.web.app.main.MainScreen;
+import com.haulmont.cuba.web.gui.screen.ScreenDependencyUtils;
+import com.vaadin.ui.Dependency;
 import de.diedavids.cuba.userinbox.web.screens.UserInboxMessageMenuBadge;
 
 import javax.inject.Inject;
@@ -30,6 +32,8 @@ public class UserInboxSideMenuMainScreen extends MainScreen {
                 updateCountersTimer,
                 this
         );
+
+        loadStyles();
     }
 
     @Subscribe
@@ -42,4 +46,8 @@ public class UserInboxSideMenuMainScreen extends MainScreen {
         userInboxMessageMenuBadge.updateMessageCounter(sideMenu);
     }
 
+    protected void loadStyles() {
+        ScreenDependencyUtils.addScreenDependency(this,
+                "vaadin://user-inbox-main-menu-screen/messages-badge.css", Dependency.Type.STYLESHEET);
+    }
 }

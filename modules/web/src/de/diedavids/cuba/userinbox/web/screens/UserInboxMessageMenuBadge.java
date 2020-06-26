@@ -39,6 +39,7 @@ public class UserInboxMessageMenuBadge {
                         .withScreenClass(UserInbox.class)
                         .show()
         );
+        messagesMenuItem.setStyleName("messages-item");
 
         sideMenu.addMenuItem(messagesMenuItem, 0);
 
@@ -53,14 +54,17 @@ public class UserInboxMessageMenuBadge {
     }
 
     public void updateMessageCounter(SideMenu sideMenu) {
-        sideMenu.getMenuItemNN("messages")
-                .setBadgeText(
-                        messages.formatMainMessage("menu-config.ddcui$user-inbox.badge", getMessageCounter())
-                );
+        final long messageCounter = getMessageCounter();
+        final SideMenu.MenuItem messagesItem = sideMenu.getMenuItemNN("messages");
+        messagesItem.setBadgeText(
+                this.messages.formatMainMessage("menu-config.ddcui$user-inbox.badge", messageCounter)
+        );
+        if (messageCounter == 0)
+            messagesItem.removeStyleName("new-messages");
+        else messagesItem.addStyleName("new-messages");
     }
 
     private long getMessageCounter() {
         return messageService.countUnreadMessagesForCurrentUser();
     }
-
 }
